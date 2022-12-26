@@ -33,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sing In to Continue"
+        android:transitionName="logo_desc"
         android:textSize="18dp" />
 
     <LinearLayout
@@ -51,7 +52,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:transitionName="user_tran"
+                android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +70,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:transitionName="password_tran"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,15 +84,18 @@
             android:elevation="0dp"/>
 
             <Button
+                android:id="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Login"
                 android:textColor="#fff"
                 android:background="#000"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:transitionName="button_tran"/>
 
         <Button
+            android:id="@+id/singup_screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -96,6 +103,7 @@
             android:textColor="#000"
             android:background="#00000000"
             android:elevation="0dp"
+            android:transitionName="login_tran"
             />
 
 
