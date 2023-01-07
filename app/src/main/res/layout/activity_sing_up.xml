@@ -14,7 +14,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.sourthenlankacarrental.SingUp"
     android:orientation="vertical"
-    android:background="#fff"
+    android:background="#FFC300 "
     android:padding="15dp">
 
 
@@ -30,7 +30,6 @@
         android:text="Welcome"
         android:textSize="40sp"
         android:fontFamily="@font/bangers"
-        android:layout_marginTop="20dp"
         android:textColor="#000"/>
     <TextView
         android:layout_width="wrap_content"
@@ -56,7 +55,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
 
 
 
@@ -67,15 +66,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="User Name"
-            app:counterEnabled="true"
             app:counterMaxLength="15"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:transitionName="user_tran"/>
+                android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,8 +129,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:transitionName="password_tran"/>
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,17 +149,28 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sing Up"
             android:background="#000"
             android:textColor="#fff"
+            android:id="@+id/reg_btn"
             android:transitionName="button_tran"/>
+
+        <ProgressBar
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_bar"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Alredy have an account? Login"
+            android:id="@+id/reg_login_btn"
             android:background="#00000000"
             android:transitionName="login_tran"/>
 

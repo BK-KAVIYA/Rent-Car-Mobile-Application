@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "511170425244",
+    "firebase_url": "https://southern-lanka-car-rental-default-rtdb.firebaseio.com",
+    "project_id": "southern-lanka-car-rental",
+    "storage_bucket": "southern-lanka-car-rental.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511170425244:android:c7701f4c734081291dd859",
+        "android_client_info": {
+          "package_name": "com.example.sourthenlankacarrental"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511170425244-u1idmfujikt866t1nu4jcrsag5rm302d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sourthenlankacarrental",
+            "certificate_hash": "77bf83ca2d73369bab6e4696dffd6f7fa00bf12c"
+          }
+        },
+        {
+          "client_id": "511170425244-85cmbkjtqustamjh3csokj4l2gcsrrj0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVky1XnufO7BU0aHSwY8-8zVoW9x-oY94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "511170425244-85cmbkjtqustamjh3csokj4l2gcsrrj0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
