@@ -62,6 +62,7 @@ public class SingUp extends AppCompatActivity {
                 if (!isValidated){
                     return;
                 }else {
+                    changeInProgress(true);
                     rootNode=FirebaseDatabase.getInstance();
                     reference=rootNode.getReference("users");
 
@@ -79,7 +80,10 @@ public class SingUp extends AppCompatActivity {
     void changeInProgress(boolean inProgress){
         if (inProgress){
             progressBar.setVisibility(View.VISIBLE);
-            
+            regBtn.setVisibility(View.GONE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+            regBtn.setVisibility(View.VISIBLE);
         }
     }
     boolean validateData(String testEmail,String TPassword,String TcPassword){
