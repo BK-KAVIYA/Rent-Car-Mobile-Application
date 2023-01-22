@@ -1,5 +1,6 @@
 package com.example.sourthenlankacarrental;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -8,8 +9,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -19,7 +25,6 @@ public class SingUp extends AppCompatActivity {
     TextInputLayout regName,userName,email,phonenNumber,idNumber,Password,cPassword;
     Button regBtn,regToLoginbtn;
     ProgressBar progressBar;
-
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
@@ -50,11 +55,7 @@ public class SingUp extends AppCompatActivity {
 
 
                 //get all the values
-                String name=regName.getEditText().getText().toString();
-                String uName=userName.getEditText().getText().toString();
                 String Email=email.getEditText().getText().toString();
-                String phoneNumber=phonenNumber.getEditText().getText().toString();
-                String IDNumber=idNumber.getEditText().getText().toString();
                 String Pwd=Password.getEditText().getText().toString();
                 String cPwd=cPassword.getEditText().getText().toString();
 
@@ -62,12 +63,7 @@ public class SingUp extends AppCompatActivity {
                 if (!isValidated){
                     return;
                 }else {
-                    changeInProgress(true);
-                    rootNode=FirebaseDatabase.getInstance();
-                    reference=rootNode.getReference("users");
-
-                    UserHelperClass helperClass=new UserHelperClass(name,uName,Email,phoneNumber,IDNumber,Pwd,cPwd);
-                    reference.child(IDNumber).setValue(helperClass);
+                    createAccountFirebase(Email,Pwd);
                 }
 
 
@@ -75,6 +71,39 @@ public class SingUp extends AppCompatActivity {
         });
 
 
+    }
+    void createAccountFirebase(String email,String password){
+        changeInProgress(true);
+        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(SingUp.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                changeInProgress(false);
+                if(task.isSuccessful()){
+                    //create account is done
+                    String name=regName.getEditText().getText().toString();
+                    String uName=userName.getEditText().getText().toString();
+                    String phoneNumber=phonenNumber.getEditText().getText().toString();
+                    String IDNumber=idNumber.getEditText().getText().toString();
+                    String cPwd=cPassword.getEditText().getText().toString();
+
+                    rootNode=FirebaseDatabase.getInstance();
+                    reference=rootNode.getReference("users");
+
+                    UserHelperClass helperClass=new UserHelperClass(name,uName,email,phoneNumber,IDNumber,password,cPwd);
+                    reference.child(IDNumber).setValue(helperClass);
+
+                    Utility.showToast(SingUp.this,"Succefully create account, Check email to verify");
+                    firebaseAuth.getCurrentUser().sendEmailVerification();
+                    firebaseAuth.signOut();
+                    finish();
+                }else {
+                    //failure
+                    Utility.showToast(SingUp.this,task.getException().getLocalizedMessage());
+
+                }
+            }
+        });
     }
 
     void changeInProgress(boolean inProgress){

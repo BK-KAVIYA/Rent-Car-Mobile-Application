@@ -14,6 +14,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     private static int SPLASH_SCREEN=5000;
@@ -50,8 +53,15 @@ public class MainActivity extends AppCompatActivity {
                 pairs[0]=new Pair<View,String>(image,"logo_image");
                 pairs[1]=new Pair<View,String>(name,"logo_text");
 
-                ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,pairs);
-                startActivity(intent,options.toBundle());
+
+
+                FirebaseUser currentuser=FirebaseAuth.getInstance().getCurrentUser();
+                if(currentuser==null){
+                    ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,pairs);
+                    startActivity(intent,options.toBundle());
+                }else{
+                    startActivity(new Intent(MainActivity.this,Dashboard.class));
+                }
                 finish();
             }
         },SPLASH_SCREEN);
