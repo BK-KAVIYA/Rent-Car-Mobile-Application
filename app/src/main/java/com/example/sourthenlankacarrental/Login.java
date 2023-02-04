@@ -27,7 +27,6 @@ public class Login extends AppCompatActivity {
     Button callSingup,login_btn;
     ImageView image;
     TextView logoText,sloganText;
-
     ProgressBar progressBar;
     TextInputLayout email,password;
     @Override
