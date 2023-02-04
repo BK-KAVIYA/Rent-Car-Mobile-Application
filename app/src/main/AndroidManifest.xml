@@ -9,10 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SingUp"></activity>
+        <activity
+            android:name=".UserProfile"
+            android:exported="false" />
+        <activity android:name=".SingUp" />
         <activity android:name=".Login" />
         <activity android:name=".Dashboard" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
