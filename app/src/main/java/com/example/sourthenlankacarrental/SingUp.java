@@ -34,6 +34,7 @@ public class SingUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sing_up);
+        getSupportActionBar().hide();
 
 
         //Hooks to all xml element in activity sing up

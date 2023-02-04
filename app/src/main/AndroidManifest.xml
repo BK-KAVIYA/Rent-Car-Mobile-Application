@@ -12,7 +12,8 @@
         <activity android:name=".SingUp"></activity>
         <activity android:name=".Login" />
         <activity android:name=".Dashboard" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
