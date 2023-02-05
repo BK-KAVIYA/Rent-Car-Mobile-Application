@@ -2,4 +2,20 @@
     <string name="app_name">Sourthen Lanka Car Rental</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- String for dashboard -->
+
+    <!-- Title and description -->
+    <string name="dashbord_title">Lets\'s find your favourite car hear</string>
+    <string name="dashbord_brand">Trending Brands</string>
+    <string name="dashbord_search">Find your car</string>
+    <string name="dashboard_cars">new cars</string>
+    <string name="dashboard_viewall">View All</string>
+
+    <!-- category -->
+    <string name="BMW">BMW</string>
+    <string name="Nisson">nisson</string>
+    <string name="Audi">Audi</string>
+
 </resources>

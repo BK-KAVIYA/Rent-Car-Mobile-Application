@@ -3,4 +3,15 @@
     <color name="colorPrimary">#FFC300</color>
     <color name="colorPrimaryDark">#FFC300</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+
+    <!-- dashboard Colors -->
+    <color name="home_background">#f2f5f8</color>
+    <color name="banner_background">#F1E9CE</color>
+    <color name="banner_background_lite">#56F1E9CE</color>
+
+    <!-- card colors -->
+    <color name="card1">#d4cbe5</color>
 </resources>
