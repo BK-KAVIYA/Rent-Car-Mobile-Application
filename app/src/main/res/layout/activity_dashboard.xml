@@ -13,7 +13,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:padding="5dp"
+        android:background="@color/colorPrimary">
 
         <ImageView
             android:layout_centerVertical="true"
@@ -29,151 +30,7 @@
             android:src="@drawable/baseline_logout_24" />
 
     </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-        <TextView
-            android:fontFamily="@font/bangers"
-            android:id="@+id/app_name"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/dashbord_title"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
-        <RelativeLayout
-            android:background="@color/white"
-            android:elevation="8dp"
-            android:layout_below="@id/app_name"
-            android:layout_height="40dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent">
-            <TextView
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_width="wrap_content"
-                android:text="@string/dashbord_search" />
-            <ImageView
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_height="30dp"
-                android:layout_marginRight="15dp"
-                android:layout_width="30dp"
-                android:src="@drawable/baseline_search_24" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:background="@drawable/card_1"
-                android:elevation="8dp"
-                android:layout_height="60dp"
-                android:layout_margin="10dp"
-                android:layout_width="60dp">
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:layout_height="30dp"
-                    android:layout_width="30dp"
-                    android:src="@drawable/bmw" />
-            </RelativeLayout>
-            <TextView
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="@string/BMW"
-                android:textAlignment="center" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:background="@drawable/card_1"
-                android:elevation="8dp"
-                android:layout_height="60dp"
-                android:layout_margin="10dp"
-                android:layout_width="60dp">
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:layout_height="30dp"
-                    android:layout_width="30dp"
-                    android:src="@drawable/bmw" />
-            </RelativeLayout>
-            <TextView
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="@string/BMW"
-                android:textAlignment="center" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:background="@drawable/card_1"
-                android:elevation="8dp"
-                android:layout_height="60dp"
-                android:layout_margin="10dp"
-                android:layout_width="60dp">
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:layout_height="30dp"
-                    android:layout_width="30dp"
-                    android:src="@drawable/bmw" />
-            </RelativeLayout>
-            <TextView
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="@string/BMW"
-                android:textAlignment="center" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:background="@drawable/card_1"
-                android:elevation="8dp"
-                android:layout_height="60dp"
-                android:layout_margin="10dp"
-                android:layout_width="60dp">
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:layout_height="30dp"
-                    android:layout_width="30dp"
-                    android:src="@drawable/bmw" />
-            </RelativeLayout>
-            <TextView
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="@string/BMW"
-                android:textAlignment="center" />
-        </LinearLayout>
-
-
-    </LinearLayout>
+    
 
 <RelativeLayout
     android:layout_width="match_parent"

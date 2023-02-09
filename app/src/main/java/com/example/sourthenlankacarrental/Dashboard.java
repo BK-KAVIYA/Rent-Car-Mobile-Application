@@ -2,6 +2,7 @@ package com.example.sourthenlankacarrental;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,6 +11,9 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Dashboard extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
@@ -17,6 +21,12 @@ public class Dashboard extends AppCompatActivity {
     SettingFragment settingFragment=new SettingFragment();
     NotificationFragment notificationFragment=new NotificationFragment();
     MessageFragment messageFragment=new MessageFragment();
+
+    //---newly added
+
+    List<DynamicRVModel> item=new ArrayList();
+    DynamicRVAdapter dynamicRVAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,26 @@ public class Dashboard extends AppCompatActivity {
 
         bottomNavigationView =findViewById(R.id.bottom_navigation);
         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+
+        //---newly aded
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+        item.add(new DynamicRVModel("Burger"));
+
+        RecyclerView drv=findViewById(R.id.rv_1);
+
+
 
 
 
