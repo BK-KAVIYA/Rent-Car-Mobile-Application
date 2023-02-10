@@ -22,12 +22,6 @@ public class Dashboard extends AppCompatActivity {
     NotificationFragment notificationFragment=new NotificationFragment();
     MessageFragment messageFragment=new MessageFragment();
 
-    //---newly added
-
-    List<DynamicRVModel> item=new ArrayList();
-    DynamicRVAdapter dynamicRVAdapter;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().hide();
@@ -37,26 +31,6 @@ public class Dashboard extends AppCompatActivity {
 
         bottomNavigationView =findViewById(R.id.bottom_navigation);
         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
-
-        //---newly aded
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-        item.add(new DynamicRVModel("Burger"));
-
-        RecyclerView drv=findViewById(R.id.rv_1);
-
-
 
 
 

@@ -70,7 +70,7 @@ public class DynamicRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        return items.get(position)==null?VIEW_TYPE_LOADING:VIEW_TYPE_LOADING;
+        return items.get(position)==null?VIEW_TYPE_LOADING:VIEW_TYPE_ITEM;
     }
 
     public void setLoadMore(LoadMore loadMore){
