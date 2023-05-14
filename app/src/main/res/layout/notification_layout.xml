@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageViewIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/notification_icon"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageViewIcon"
+        android:text="Notification Title"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/textViewMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTitle"
+        android:layout_toEndOf="@id/imageViewIcon"
+        android:text="Notification Message"
+        android:textSize="16sp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/notificationDate"
+        android:text="12.25"
+        android:layout_below="@id/textViewMessage"
+        android:textAlignment="textEnd"/>
+
+</RelativeLayout>
