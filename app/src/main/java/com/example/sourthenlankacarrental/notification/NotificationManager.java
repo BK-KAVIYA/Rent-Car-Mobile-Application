@@ -22,11 +22,7 @@ public class NotificationManager extends RecyclerView.Adapter<NotificationViewHo
         this.context = context;
         this.notificationList = notificationList;
     }
-    @NonNull
-    @Override
-    public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NotificationViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_layout,parent,false));
-    }
+
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
         holder.title.setText(notificationList.get(position).getTitle());
