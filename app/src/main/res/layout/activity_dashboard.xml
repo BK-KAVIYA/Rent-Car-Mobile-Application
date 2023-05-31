@@ -17,6 +17,7 @@
         android:background="@color/colorPrimary">
 
         <ImageView
+            android:id="@+id/dash_avtr"
             android:layout_centerVertical="true"
             android:layout_height="40dp"
             android:layout_width="40dp"

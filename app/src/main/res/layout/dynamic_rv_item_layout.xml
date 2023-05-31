@@ -10,6 +10,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:id="@+id/rvi_image"
         android:elevation="20dp"
         android:src="@drawable/rangerover"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
@@ -28,9 +29,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent=".9">
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20sp"
+            tools:ignore="MissingConstraints">
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/rvi_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Range Rover"
@@ -44,27 +50,30 @@
             app:layout_constraintVertical_bias=".15" />
 
         <TextView
-            android:id="@+id/details"
+            android:id="@+id/rvi_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Some necessary details"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.123"
+            app:layout_constraintHorizontal_bias="0.115"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintTop_toBottomOf="@+id/rvi_name"
             app:layout_constraintVertical_bias="0.054" />
 
         <RatingBar
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/rvi_rating"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent" />
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

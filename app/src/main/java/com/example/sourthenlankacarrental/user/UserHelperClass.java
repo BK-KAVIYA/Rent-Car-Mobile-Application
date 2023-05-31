@@ -1,4 +1,12 @@
-package com.example.sourthenlankacarrental;
+package com.example.sourthenlankacarrental.user;
+
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class UserHelperClass {
     //variable
@@ -72,4 +80,19 @@ public class UserHelperClass {
     public void setcPassword(String cPassword) {
         this.cPassword = cPassword;
     }
+
+    @Override
+    public String toString() {
+        return "UserHelperClass{" +
+                "regName='" + regName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", phonenNumber='" + phonenNumber + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", Password='" + Password + '\'' +
+                ", cPassword='" + cPassword + '\'' +
+                '}';
+    }
 }
+
+

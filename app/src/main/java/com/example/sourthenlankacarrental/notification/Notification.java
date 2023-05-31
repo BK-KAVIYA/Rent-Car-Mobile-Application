@@ -4,9 +4,9 @@ public class Notification {
     private String title;
     private String message;
     private int image;
-    private float date;
+    private double date;
 
-    public Notification(String title, String message, int image, float date) {
+    public Notification(String title, String message, int image, double date) {
         this.title = title;
         this.message = message;
         this.image = image;
@@ -37,7 +37,7 @@ public class Notification {
         this.image = image;
     }
 
-    public float getDate() {
+    public double getDate() {
         return date;
     }
 

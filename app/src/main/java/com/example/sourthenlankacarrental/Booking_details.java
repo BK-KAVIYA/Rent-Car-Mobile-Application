@@ -2,12 +2,17 @@ package com.example.sourthenlankacarrental;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
 
@@ -24,6 +30,10 @@ public class Booking_details extends AppCompatActivity implements AdapterView.On
 
     TextInputEditText start_date;
     TextInputEditText end_date;
+
+    Button booking_btn;
+
+
 
     DatePickerDialog.OnDateSetListener dateSetListener;
 
@@ -36,10 +46,15 @@ ImageView imageView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_details);
+        getSupportActionBar().hide();
 
 
         start_date=findViewById(R.id.startdate);
-        end_date=findViewById(R.id.enddate);
+        end_date=findViewById(R.id.end_date);
+        booking_btn=findViewById(R.id.booking_det);
+
+
+
 
         Calendar calendar=Calendar.getInstance();
         final int year=calendar.get(Calendar.YEAR);
@@ -61,6 +76,7 @@ ImageView imageView;
             }
         });
 
+
         start_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +91,16 @@ ImageView imageView;
                 datePickerDialog.show();
             }
         });
+
+        booking_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    System.out.println("this is calling");
+                    Intent intent=new Intent(Booking_details.this,GaurantorDetails.class);
+                    startActivity(intent);
+                }
+            });
+
 
         imageView=findViewById(R.id.nicgallery);
         Button btnGallery=findViewById(R.id.nicbtn);
@@ -155,4 +181,5 @@ ImageView imageView;
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }

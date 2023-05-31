@@ -59,7 +59,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="25dp"
+                android:padding="15dp"
                 android:minHeight="380dp"
                 android:layout_margin="10dp"
                 android:orientation="vertical"
@@ -161,8 +161,8 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="160dp"
-                        android:layout_height="50dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:inputType="text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -261,7 +261,6 @@
                     android:textSize="16sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Start Date"
@@ -282,21 +281,21 @@
                     android:text="End Date"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/enddate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="End Date"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/end_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
 
-
-
                 </com.google.android.material.textfield.TextInputLayout>
+
 
 
                 <CheckBox
@@ -314,7 +313,7 @@
                 android:text="Next"
                 android:background="#000"
                 android:textColor="#fff"
-                android:id="@+id/reg_btn"
+                android:id="@+id/booking_det"
                 android:transitionName="button_tran"/>
 
             <ProgressBar
@@ -325,13 +324,6 @@
                 android:layout_marginTop="12dp"
                 android:visibility="gone"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Alredy have an account? Login"
-                android:id="@+id/reg_login_btn"
-                android:background="#00000000"
-                android:transitionName="login_tran"/>
 
 
         </LinearLayout>

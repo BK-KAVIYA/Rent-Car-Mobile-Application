@@ -14,7 +14,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.sourthenlankacarrental.SingUp"
     android:orientation="vertical"
-    android:background="#FFC300 "
+    android:background="#0000"
     android:padding="15dp">
 
 
@@ -170,6 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Alredy have an account? Login"
+            android:textColor="@color/black"
             android:id="@+id/reg_login_btn"
             android:background="#00000000"
             android:transitionName="login_tran"/>

@@ -23,7 +23,7 @@ public class Dashboard extends AppCompatActivity {
     NotificationFragment notificationFragment=new NotificationFragment();
     MessageFragment messageFragment=new MessageFragment();
 
-    ImageView LogoutButton;
+    ImageView LogoutButton,Avatar;
 
 
 
@@ -34,6 +34,15 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         getSupportActionBar().hide();
+
+
+        Avatar=findViewById(R.id.dash_avtr);
+        Avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,settingFragment).commit();
+            }
+        });
 
         LogoutButton=findViewById(R.id.logout_btn);
 
