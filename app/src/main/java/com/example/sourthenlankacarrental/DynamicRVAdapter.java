@@ -1,117 +1,84 @@
 package com.example.sourthenlankacarrental;
 
-import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
+
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sourthenlankacarrental.DRVInterface.LoadMore;
+import java.util.ArrayList;
 
-import java.util.List;
+public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.ViewHolder> {
+    ArrayList<DynamicItemList> dynamicRVModels;
 
-class LoadingViewHolder extends RecyclerView.ViewHolder{
-
-    public ProgressBar progressBar;
-
-    public LoadingViewHolder(@NonNull View itemView) {
-        super(itemView);
-        progressBar=itemView.findViewById(R.id.progress_bar);
-    }
-}
-
-class ItemViewHolder extends RecyclerView.ViewHolder{
-
-    public TextView name;
-    public ItemViewHolder(@NonNull View itemView) {
-        super(itemView);
-        name=itemView.findViewById(R.id.name);
+    public DynamicRVAdapter(ArrayList<DynamicItemList> dynamicRVModels) {
+        this.dynamicRVModels = dynamicRVModels;
     }
 
-    public TextView getName() {
-        return name;
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View inflate= LayoutInflater.from(parent.getContext()).inflate(R.layout.dynamic_rv_item_layout,parent,false);
+        return new ViewHolder(inflate);
     }
-}
 
-public class DynamicRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.carName.setText(dynamicRVModels.get(position).getTitle());
+        holder.carDetails.setText(dynamicRVModels.get(position).getDescription());
+        holder.ratingBar.setRating(dynamicRVModels.get(position).getReview());
 
-    private final int VIEW_TYPE_ITEM=0, VIEW_TYPE_LOADING=1;
-    LoadMore loadMore;
-    boolean isLoading;
-    Activity activity;
-    List<DynamicRVModel> items;
-    int visibleThreshold=5;
-    int lastVisibleItem,totalItemCount;
+        String imageUrl = dynamicRVModels.get(position).getImage()
+                ;
+        if (imageUrl != null) {
+            Glide.with(holder.imageView.getContext())
+                    .load(imageUrl)
+                    .into(holder.imageView);
+        }
 
-    public DynamicRVAdapter(RecyclerView recyclerView,Activity activity, List<DynamicRVModel> items) {
-        this.activity = activity;
-        this.items = items;
-
-        final LinearLayoutManager linearLayoutManager=(LinearLayoutManager) recyclerView.getLayoutManager();
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                totalItemCount=linearLayoutManager.getItemCount();
-                lastVisibleItem=linearLayoutManager.findLastCompletelyVisibleItemPosition();
-                if(!isLoading && totalItemCount<=(lastVisibleItem+visibleThreshold)){
-                    if (loadMore!=null)
-                        loadMore.onLoadmore();
-                    isLoading=true;
-                }
+            public void onClick(View view) {
+                // Handle item click here
+                // Start the new activity
+                Context context = view.getContext();
+                Intent intent = new Intent(context, Booking_details.class);
+                // Pass any extra data to the new activity if needed
+                //intent.putExtra("key", yourData);
+                context.startActivity(intent);
             }
         });
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return items.get(position)==null?VIEW_TYPE_LOADING:VIEW_TYPE_ITEM;
-    }
-
-    public void setLoadMore(LoadMore loadMore){
-        this.loadMore=loadMore;
-
-    }
-
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType==VIEW_TYPE_ITEM){
-            View view= LayoutInflater.from(activity).inflate(R.layout.dynamic_rv_itrm_layout,parent,false);
-            return new LoadingViewHolder(view);
-        } else if (viewType==VIEW_TYPE_LOADING) {
-            View view= LayoutInflater.from(activity).inflate(R.layout.dynamic_rv_progressbar,parent,false);
-            return new LoadingViewHolder(view);
-        }
-
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-    if (holder instanceof ItemViewHolder){
-       DynamicRVModel item=items.get(position);
-       ItemViewHolder viewHolder=(ItemViewHolder) holder;
-       viewHolder.name.setText(items.get(position).getName());
-    } else if (holder instanceof  LoadingViewHolder) {
-        LoadingViewHolder loadingViewHolder=(LoadingViewHolder) holder;
-        
-    }
-    }
-
-
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return dynamicRVModels.size();
     }
 
-    public void setLoded(){
-        isLoading=false;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public TextView carName,carDetails;
+        public ImageView imageView;
+
+        public RatingBar ratingBar;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            carName=itemView.findViewById(R.id.rvi_name);
+            carDetails=itemView.findViewById(R.id.rvi_details);
+            imageView=itemView.findViewById(R.id.rvi_image);
+            ratingBar=itemView.findViewById(R.id.rvi_rating);
+
+        }
     }
+
+
+
 }

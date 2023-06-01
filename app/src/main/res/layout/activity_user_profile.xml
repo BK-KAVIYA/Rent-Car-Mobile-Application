@@ -148,12 +148,13 @@
             android:padding="20dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/full_name_profile"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Full Name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/full_name_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_account_circle_24"
@@ -162,13 +163,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_profile"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="E-mail">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_email_24"
@@ -177,13 +179,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/user_name_profile"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="User Name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/user_name_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_3p_24"
@@ -192,13 +195,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/id_number_profile"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="ID Number">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/id_number_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_payment_24"
@@ -207,13 +211,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phone_number_profile"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="Phone Number">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_number_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_phone_android_24"
@@ -222,7 +227,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_profile"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -230,6 +235,7 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_account_circle_24"
@@ -241,6 +247,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/usr_profile_btn"
                 android:layout_marginTop="30dp"
                 android:background="#fece2f"
                 android:fontFamily="@font/bangers"

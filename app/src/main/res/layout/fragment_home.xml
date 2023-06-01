@@ -149,8 +149,19 @@
             </LinearLayout>
 
 
+
+
         </LinearLayout>
 
+    <TextView
+        android:fontFamily="@font/bangers"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Book Your Car"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_1"
             android:layout_width="match_parent"

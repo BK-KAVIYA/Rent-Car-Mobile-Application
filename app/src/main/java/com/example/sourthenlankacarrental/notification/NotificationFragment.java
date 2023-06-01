@@ -29,8 +29,9 @@ public class NotificationFragment extends Fragment {
 
         dataList = new ArrayList<>();
         dataList.add(new Notification("Title1", "Test message1", 4, 12.12));
-        dataList.add(new Notification("Title2", "Test message2", 4, 12-06-2024));
-        dataList.add(new Notification("Title3", "Test message3", 4, 12-03-2023));
+        dataList.add(new Notification("Title2", "Test message2", 4, 12.20));
+        dataList.add(new Notification("Title3", "Test message3", 4, 15.20));
+
         // Add more items as needed
 
         adapter = new NotificationManager(getContext(),dataList);
