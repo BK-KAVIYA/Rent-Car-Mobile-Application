@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment{
                                     vehicles.add(vehicle);
                                 }
                                 for (Vehicle vehicle : vehicles) {
-                                    itemVehicle.add(new DynamicItemList(vehicle.getTitle(), vehicleList.getDescription(), vehicleList.getRating(), vehicle.getImage()));
+                                    itemVehicle.add(new DynamicItemList(vehicle.getId(),vehicle.getTitle(), vehicleList.getDescription(), vehicleList.getRating(), vehicle.getImage()));
                                 }
                                 dynamicRVAdapter.notifyDataSetChanged();
                             }

@@ -13,6 +13,10 @@
     <string name="dashboard_cars">new cars</string>
     <string name="dashboard_viewall">View All</string>
 
+    <!-- Extra Test-->
+    <string name="spinner_prompt">Select Gender</string>
+
+
     <!-- category -->
     <string name="BMW">BMW</string>
     <string name="Nisson">nisson</string>

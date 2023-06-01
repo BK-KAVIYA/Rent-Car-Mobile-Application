@@ -28,6 +28,7 @@
             <ImageView
                 android:layout_width="320dp"
                 android:layout_height="200dp"
+                android:id="@+id/booking_image_view"
                 android:src="@drawable/rangerover"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center"
@@ -94,6 +95,26 @@
                         android:inputType="text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile Number"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/mobile_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile Number"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:layout_marginTop="10dp"
@@ -147,10 +168,13 @@
 
                 <Spinner
                     android:id="@+id/gender"
-                    android:layout_height="50dp"
                     android:layout_width="160dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/spinner_border"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/age"
@@ -202,6 +226,7 @@
                         android:id="@+id/district"
                         android:layout_height="50dp"
                         android:layout_width="160dp"
+                        android:background="@drawable/spinner_border"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -229,7 +254,7 @@
                 <ImageView
                     android:layout_width="340dp"
                     android:layout_height="240dp"
-                    android:id="@+id/nicgallery"
+                    android:id="@id/nicgallery"
                     android:scaleType="fitXY"/>
 
             </LinearLayout>

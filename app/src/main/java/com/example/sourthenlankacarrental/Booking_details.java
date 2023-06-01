@@ -1,11 +1,13 @@
 package com.example.sourthenlankacarrental;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,19 +23,48 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Booking_details extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     TextInputEditText start_date;
     TextInputEditText end_date;
+    ImageView imageViewVehicle,nicimage;
 
     Button booking_btn;
+    private int vehicleId;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    public Booking_details(int id){
+        this.vehicleId=id;
+        onLoad(vehicleId);
+    }
+    public Booking_details(){
+
+    }
+
+    public int getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(int vehicleId) {
+        this.vehicleId = vehicleId;
 
 
+    }
 
     DatePickerDialog.OnDateSetListener dateSetListener;
 
@@ -41,7 +72,7 @@ public class Booking_details extends AppCompatActivity implements AdapterView.On
     String[] district={"Colombo","Gampaha","Kalutara","Kandy","Matale","Nuwara Eliya","Galle","Matara","Hambantota","Jaffna","Kilinochchi","Mannar","Vavuniya","Mullaitivu","Batticaloa","Ampara","Trincomalee","Kurunegala","Puttalam","Anuradhapura","Polonnaruwa","Badulla","Moneragala","Ratnapura","Kegalle"};
 
 private final int GALLERY_REQ_CODE=1000;
-ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +80,14 @@ ImageView imageView;
         getSupportActionBar().hide();
 
 
+
         start_date=findViewById(R.id.startdate);
         end_date=findViewById(R.id.end_date);
         booking_btn=findViewById(R.id.booking_det);
+        imageViewVehicle=findViewById(R.id.booking_image_view);
+
+
+
 
 
 
@@ -102,7 +138,7 @@ ImageView imageView;
             });
 
 
-        imageView=findViewById(R.id.nicgallery);
+        nicimage=findViewById(R.id.nicgallery);
         Button btnGallery=findViewById(R.id.nicbtn);
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +193,7 @@ ImageView imageView;
 
         if(resultCode==RESULT_OK){
             if(requestCode==GALLERY_REQ_CODE){
-                imageView.setImageURI(data.getData());
+                nicimage.setImageURI(data.getData());
             }
         }
     }
@@ -182,4 +218,45 @@ ImageView imageView;
 
     }
 
-}
+    public void onLoad(int vid) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference();
+
+        Query query = databaseReference.child("vehicle").orderByChild("id").equalTo(vid);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    List<Vehicle> vehicles = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        System.out.println("Test this one===============");
+                        Vehicle vehicle = snapshot.getValue(Vehicle.class);
+                        vehicles.add(vehicle);
+                    }
+
+                    for (Vehicle vehicle : vehicles) {
+                        System.out.println("=====================" + vehicle.getImage() + "===="+getVehicleId());
+                        if (vehicle.getImage() != null) {
+
+                            Glide.with(imageViewVehicle.getContext())
+                                    .load(vehicle.getImage())
+                                    .into(imageViewVehicle);
+                        }
+                    }
+                } else {
+                    System.out.println("Data does not exist!!");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle any errors
+                // ...
+            }
+        });
+
+    }
+
+
+    }

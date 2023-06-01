@@ -1,5 +1,6 @@
 package com.example.sourthenlankacarrental;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.ViewHolder> {
     ArrayList<DynamicItemList> dynamicRVModels;
+    Booking_details booking_details;
 
     public DynamicRVAdapter(ArrayList<DynamicItemList> dynamicRVModels) {
         this.dynamicRVModels = dynamicRVModels;
@@ -30,14 +32,16 @@ public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.Vie
         return new ViewHolder(inflate);
     }
 
+
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         holder.carName.setText(dynamicRVModels.get(position).getTitle());
         holder.carDetails.setText(dynamicRVModels.get(position).getDescription());
         holder.ratingBar.setRating(dynamicRVModels.get(position).getReview());
 
-        String imageUrl = dynamicRVModels.get(position).getImage()
-                ;
+
+        String imageUrl = dynamicRVModels.get(position).getImage();
         if (imageUrl != null) {
             Glide.with(holder.imageView.getContext())
                     .load(imageUrl)
@@ -47,6 +51,9 @@ public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.Vie
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                booking_details=new Booking_details(dynamicRVModels.get(position).getId());
+
                 // Handle item click here
                 // Start the new activity
                 Context context = view.getContext();
@@ -54,6 +61,7 @@ public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.Vie
                 // Pass any extra data to the new activity if needed
                 //intent.putExtra("key", yourData);
                 context.startActivity(intent);
+
             }
         });
     }
