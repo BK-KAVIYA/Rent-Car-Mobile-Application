@@ -50,7 +50,7 @@ public class Booking_details extends AppCompatActivity implements AdapterView.On
     private DatabaseReference databaseReference;
     public Booking_details(int id){
         this.vehicleId=id;
-        onLoad(vehicleId);
+
     }
     public Booking_details(){
 
@@ -77,7 +77,18 @@ private final int GALLERY_REQ_CODE=1000;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_details);
+        System.out.println("---------------------------"+getVehicleId());
         getSupportActionBar().hide();
+        Intent intent=getIntent();
+        if (intent != null) {
+            // Retrieve the saved values from the bundle
+            vehicleId = savedInstanceState.getInt("vid");
+
+
+            // Restore the values to your variables
+            // Do something with the restored values
+        }
+        onLoad(vehicleId);
 
 
 
@@ -185,6 +196,13 @@ private final int GALLERY_REQ_CODE=1000;
         // Spinner which binds data to spinner
         spin.setAdapter(ad);
         spin1.setAdapter(ad1);
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save the values to the bundle
+        outState.putInt("id", getVehicleId());
     }
 
     @Override

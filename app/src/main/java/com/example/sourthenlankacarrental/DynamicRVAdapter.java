@@ -39,6 +39,7 @@ public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.Vie
         holder.carName.setText(dynamicRVModels.get(position).getTitle());
         holder.carDetails.setText(dynamicRVModels.get(position).getDescription());
         holder.ratingBar.setRating(dynamicRVModels.get(position).getReview());
+        int vId=dynamicRVModels.get(position).getId();
 
 
         String imageUrl = dynamicRVModels.get(position).getImage();
@@ -51,15 +52,16 @@ public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.Vie
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                booking_details=new Booking_details(dynamicRVModels.get(position).getId());
+//                System.out.println("Inside main-------------------------"+vId);
+//                booking_details=new Booking_details();
+//                booking_details.setVehicleId(vId);
 
                 // Handle item click here
                 // Start the new activity
                 Context context = view.getContext();
                 Intent intent = new Intent(context, Booking_details.class);
                 // Pass any extra data to the new activity if needed
-                //intent.putExtra("key", yourData);
+                intent.putExtra("vid", vId);
                 context.startActivity(intent);
 
             }

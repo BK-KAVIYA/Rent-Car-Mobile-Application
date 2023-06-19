@@ -62,4 +62,7 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:26.3.0')
     implementation 'com.google.firebase:firebase-database-ktx'
+
+    implementation 'mysql:mysql-connector-java:8.0.26'
+
 }
