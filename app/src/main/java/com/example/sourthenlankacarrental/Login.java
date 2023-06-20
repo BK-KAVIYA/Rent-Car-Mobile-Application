@@ -22,6 +22,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Login extends AppCompatActivity {
 
     Button callSingup,login_btn;
@@ -76,6 +81,8 @@ public class Login extends AppCompatActivity {
                 if (!isValidated){
                     return;
                 }else {
+                    System.out.println("Done");
+                    System.out.println(email+"kk"+"kk"+password);
                     loginAccountInFirebase(Email,Password);
                 }
             }
@@ -85,6 +92,37 @@ public class Login extends AppCompatActivity {
 
     }
     void loginAccountInFirebase(String email,String upassword){
+
+//        try {
+//            Connection databaseConnection = DatabaseConnection.getConnection();
+//            if (databaseConnection != null) {
+//                String query = "SELECT * FROM user WHERE email='"+email+"'";
+//                PreparedStatement statement = databaseConnection.prepareStatement(query);
+//
+//                ResultSet resultSet = statement.executeQuery();
+//
+//                while (resultSet.next()) {
+//
+//                    String uemail=resultSet.getString("email");
+//                    String password=resultSet.getString("password");
+//
+//                    // Do something with the retrieved data
+//                }
+//                if(password.equals(upassword)){
+//                    startActivity(new Intent(Login.this,Dashboard.class));
+//                    finish();
+//                }else{
+//                    System.out.println("password incorrect");
+//                }
+//                resultSet.close();
+//                statement.close();
+//                databaseConnection.close();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+
         FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
         changeInProgress(true);
         firebaseAuth.signInWithEmailAndPassword(email,upassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

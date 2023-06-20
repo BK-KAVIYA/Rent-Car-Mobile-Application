@@ -91,7 +91,6 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nicnumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="NIC Number"
@@ -110,7 +109,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/mobile_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Mobile Number"
@@ -162,7 +160,6 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/age"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -215,7 +212,6 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/niccpy"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -244,7 +240,6 @@
 
 
     <CheckBox
-        android:id="@+id/myCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="18dp"
@@ -255,8 +250,7 @@
         android:layout_height="wrap_content"
         android:text="Book Now"
         android:background="#000"
-        android:textColor="#fff"
-        android:id="@+id/book_btn"/>
+        android:textColor="#fff" />
 
 
 </LinearLayout>
