@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.sourthenlankacarrental.Messages.MessageFragment;
 import com.example.sourthenlankacarrental.notification.NotificationFragment;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -63,7 +64,7 @@ public class Dashboard extends AppCompatActivity {
         try {
             BadgeDrawable badgeDrawable=bottomNavigationView.getOrCreateBadge(R.id.notification);
             badgeDrawable.setVisible(true);
-            badgeDrawable.setNumber(8);
+            badgeDrawable.setNumber(4);
         }catch (Exception e){
             System.out.println("=================================================="+e);
         }

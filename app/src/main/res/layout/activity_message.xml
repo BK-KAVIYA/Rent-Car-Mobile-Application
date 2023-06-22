@@ -5,6 +5,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/message_list"
         android:layout_above="@+id/message_layout"
         android:padding="8dp"
         android:scrollbars="vertical"
@@ -23,6 +24,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/send_message"
             android:layout_toLeftOf="@+id/send_button"
             android:inputType="textMultiLine"
             android:hint="Type a message"

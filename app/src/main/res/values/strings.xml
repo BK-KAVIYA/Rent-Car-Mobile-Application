@@ -14,5 +14,7 @@
 
     <!-- category -->
     <string name="BMW">BMW</string>
+    <string name="prompt_gender">Select Gender</string>
+
 
 </resources>

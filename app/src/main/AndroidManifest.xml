@@ -19,14 +19,19 @@
             android:name=".Booking_details"
             android:exported="true" />
         <activity
+            android:name=".BookingDetails.MyBookingFragment"
+            android:exported="true" />
+        <activity
             android:name=".SettingFragment"
             android:exported="true" />
         <activity
             android:name=".GaurantorDetails"
             android:exported="true" />
-
         <activity
-            android:name=".Message"
+            android:name=".Payment.PaymentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Messages.Message"
             android:exported="false" />
 
         <activity android:name=".SingUp" />

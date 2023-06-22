@@ -1,8 +1,10 @@
-package com.example.sourthenlankacarrental;
+package com.example.sourthenlankacarrental.Messages;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.sourthenlankacarrental.R;
 
 public class Message extends AppCompatActivity {
 

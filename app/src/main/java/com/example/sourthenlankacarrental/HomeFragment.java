@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment{
                                 for (Vehicle vehicle : vehicles) {
                                     itemVehicle.add(new DynamicItemList(vehicle.getId(),vehicle.getTitle(), vehicleList.getDescription(), vehicleList.getRating(), vehicle.getImage()));
                                 }
-                                dynamicRVAdapter.notifyDataSetChanged();
+                               dynamicRVAdapter.notifyDataSetChanged();
                             }
                             // Use the vehicle object here
                             else {

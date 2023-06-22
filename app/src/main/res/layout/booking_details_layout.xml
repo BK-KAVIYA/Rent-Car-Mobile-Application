@@ -2,44 +2,95 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="15dp">
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/dynamic_rv_bg"
+    android:padding="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    >
 
     <ImageView
         android:id="@+id/imageViewIcon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/notification_icon"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_marginLeft="6dp"
+        android:src="@drawable/rangerover"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_toEndOf="@id/imageViewIcon"
-        android:text="Notification Title"
+        android:text="Vihicle Title"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginStart="16dp"
         android:layout_centerVertical="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:id="@+id/image_section"
+        android:layout_below="@+id/textViewTitle"
+        android:layout_toEndOf="@id/imageViewIcon"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/booking_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewTitle"
+            android:layout_toEndOf="@id/imageViewIcon"
+            android:text="start date"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp" />
+        <TextView
+            android:id="@+id/booking_datee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewTitle"
+            android:layout_toEndOf="@id/imageViewIcon"
+            android:text="23-06-2022"
+            android:textSize="12sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="3dp" />
+        <TextView
+            android:id="@+id/booking_date_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewTitle"
+            android:layout_toEndOf="@id/imageViewIcon"
+            android:text="End Date"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="8dp" />
+        <TextView
+            android:id="@+id/booking_date_ends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewTitle"
+            android:layout_toEndOf="@id/imageViewIcon"
+            android:text="23-06-2022"
+            android:textSize="12sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="3dp" />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textViewMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewTitle"
-        android:layout_toEndOf="@id/imageViewIcon"
-        android:text="Notification Message"
-        android:textSize="16sp"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="16dp" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/notificationDate"
-        android:text="12.12"
+        android:id="@+id/status"
+        android:text="Approved"
         android:layout_marginRight="20dp"
-        android:layout_below="@id/textViewMessage"
+        android:textStyle="bold"
+        android:layout_below="@id/image_section"
         android:textAlignment="textEnd"/>
 
 </RelativeLayout>

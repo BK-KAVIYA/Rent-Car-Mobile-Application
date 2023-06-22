@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ public class NotificationFragment extends Fragment {
     private NotificationManager adapter;
     private List<Notification> dataList;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
@@ -28,9 +30,10 @@ public class NotificationFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         dataList = new ArrayList<>();
-        dataList.add(new Notification("Title1", "Test message1", 4, 12.12));
-        dataList.add(new Notification("Title2", "Test message2", 4, 12.20));
-        dataList.add(new Notification("Title3", "Test message3", 4, 15.20));
+        dataList.add(new Notification("Vehicle Booking Confirmation", "Booking has been successfully confirmed.", 4, 12.12));
+        dataList.add(new Notification("Vehicle Return", "Thank you for returning your rental vehicle", 4, 12.20));
+        dataList.add(new Notification("Payment Confirmation", "Payment has been successfully processed. ", 4, 15.20));
+        dataList.add(new Notification("Vehicle Booking Confirmation", "Booking has been successfully confirmed.", 4, 17.30));
 
         // Add more items as needed
 

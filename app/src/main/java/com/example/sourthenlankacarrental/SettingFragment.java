@@ -1,15 +1,20 @@
 package com.example.sourthenlankacarrental;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
+import com.example.sourthenlankacarrental.BookingDetails.MyBookingFragment;
 import com.example.sourthenlankacarrental.user.UserHelperClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,6 +42,8 @@ public class SettingFragment extends Fragment {
     private TextInputEditText fullname,uemail,uname,idNumber,mobile,password;
     private Button profileButton;
 
+    RelativeLayout myRelativeLayout;
+
     FirebaseUser user;
 
 
@@ -56,6 +63,8 @@ public class SettingFragment extends Fragment {
         mobile=view.findViewById(R.id.phone_number_profile);
         password=view.findViewById(R.id.password_profile);
         profileButton=view.findViewById(R.id.usr_profile_btn);
+        myRelativeLayout = view.findViewById(R.id.mybooking);
+
 
         // Get another reference to the root node of the database
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -67,7 +76,16 @@ public class SettingFragment extends Fragment {
             email = user.getEmail();
         }
 
+        myRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //System.out.println("============================================");
 
+                Context context = requireContext(); // or getContext() if you're inside a Fragment
+                Intent intent = new Intent(context, MyBookingFragment.class);
+                startActivity(intent);
+            }
+        });
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override

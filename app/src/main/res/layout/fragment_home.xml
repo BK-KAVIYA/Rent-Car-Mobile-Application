@@ -62,17 +62,68 @@
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
                     android:layout_width="60dp">
+
                     <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_centerInParent="true"
-                        android:layout_height="30dp"
-                        android:layout_width="30dp"
-                        android:src="@drawable/bmw" />
+                        android:src="@drawable/car" />
                 </RelativeLayout>
                 <TextView
                     android:gravity="center_horizontal"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:text="@string/BMW"
+                    android:text="CARS"
+                    android:textAlignment="center" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:background="@drawable/card_1"
+                    android:elevation="8dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:layout_width="60dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/cab" />
+                </RelativeLayout>
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="CABS"
+                    android:textAlignment="center" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:background="@drawable/card_1"
+                    android:elevation="8dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:layout_width="60dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/jeep" />
+                </RelativeLayout>
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="JEEPS"
                     android:textAlignment="center" />
             </LinearLayout>
             <LinearLayout
@@ -88,63 +139,15 @@
                     android:layout_width="60dp">
                     <ImageView
                         android:layout_centerInParent="true"
-                        android:layout_height="30dp"
-                        android:layout_width="30dp"
-                        android:src="@drawable/bmw" />
+                        android:layout_height="40dp"
+                        android:layout_width="40dp"
+                        android:src="@drawable/van" />
                 </RelativeLayout>
                 <TextView
                     android:gravity="center_horizontal"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:text="@string/BMW"
-                    android:textAlignment="center" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:background="@drawable/card_1"
-                    android:elevation="8dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:layout_width="60dp">
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:layout_height="30dp"
-                        android:layout_width="30dp"
-                        android:src="@drawable/bmw" />
-                </RelativeLayout>
-                <TextView
-                    android:gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/BMW"
-                    android:textAlignment="center" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:background="@drawable/card_1"
-                    android:elevation="8dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:layout_width="60dp">
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:layout_height="30dp"
-                        android:layout_width="30dp"
-                        android:src="@drawable/bmw" />
-                </RelativeLayout>
-                <TextView
-                    android:gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/BMW"
+                    android:text="VANS"
                     android:textAlignment="center" />
             </LinearLayout>
 

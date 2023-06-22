@@ -43,7 +43,11 @@
         android:layout_marginTop="-20dp"
         android:layout_marginLeft="10dp"/>
 
-
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/layout_bg"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,6 +83,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/name_txt"
+                android:textColor="@color/black"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -99,6 +105,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/nic_txt"
+                android:textColor="@color/black"
                 android:inputType="text" />
 
             <TextView
@@ -117,6 +125,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/mobile_txt"
+                    android:textColor="@color/black"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -156,19 +166,22 @@
                 android:id="@+id/gender"
                 android:layout_height="50dp"
                 android:layout_width="160dp"
+                android:background="@drawable/spinner_border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:hint="Age"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="160dp"
-                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/age_txt"
+                    android:textColor="@color/black"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -208,6 +221,7 @@
                 android:id="@+id/district"
                 android:layout_height="50dp"
                 android:layout_width="160dp"
+                android:background="@drawable/spinner_border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -236,21 +250,33 @@
             android:layout_height="140dp"
             android:id="@+id/nicgallery"
             android:scaleType="fitXY"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:text="I hereby certify that I duly accept and agree to the above conditions in respect of the above car and agree to take the vehicle." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/termsandcondition"
+            android:text="Terms and Condition"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/book_btn"
+            android:text="Book Now"
+            android:background="#000"
+            android:textColor="#fff" />
     </LinearLayout>
 
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
-        android:text="I have read and agree to the term and condition" />
-    <Button
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Book Now"
-        android:background="#000"
-        android:textColor="#fff" />
 
 
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
