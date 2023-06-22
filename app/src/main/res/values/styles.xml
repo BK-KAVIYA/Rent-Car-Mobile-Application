@@ -11,8 +11,4 @@
 
     </style>
 
-    <style name="CollapsingToolbarLayout" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="android:fontFamily">@font/bangers</item>
-    </style>
-
 </resources>

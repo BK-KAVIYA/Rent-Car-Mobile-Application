@@ -32,7 +32,10 @@ public class NotificationManager extends RecyclerView.Adapter<NotificationViewHo
         holder.title.setText(notificationList.get(position).getTitle());
         holder.message.setText(notificationList.get(position).getMessage());
         holder.date.setText(String.valueOf(notificationList.get(position).getDate()));
+
         // holder.imageView.setImageResource(notificationList.get(position).getImage());
+
+        
     }
 
     @Override
