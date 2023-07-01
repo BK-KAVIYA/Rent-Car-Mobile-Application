@@ -33,6 +33,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.sourthenlankacarrental.BookingDetails.Booking;
+import com.example.sourthenlankacarrental.Connection.DBConnection;
+import com.example.sourthenlankacarrental.user.UserHelperClass;
+import com.example.sourthenlankacarrental.user.UserSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +56,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -61,8 +68,7 @@ import java.util.Map;
 
 public class Booking_details extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    FirebaseDatabase fdatabase = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = fdatabase.getReference("booking");
+    Connection connection;
     TextInputLayout start_date,end_date;
     TextInputEditText start_date_txt,end_date_txt,name_txt,mobile_txt,nic_txt,age_txt;
     ImageView imageViewVehicle,nicimage;
@@ -72,7 +78,8 @@ public class Booking_details extends AppCompatActivity implements AdapterView.On
     CheckBox driverStatusCheckbox;
     Booking booking=new Booking();
 
-    private String name,mobile,nic_num,gender_txt,age,district_text,nic_cpy,start_dt,end_dt;
+
+    private String name,mobile,nic_num,gender_txt,age,district_text,nic_cpy,start_dt,end_dt,email;
     private int vehicleId;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -118,7 +125,7 @@ private final int GALLERY_REQ_CODE=1000;
             // Restore the values to your variables
             // Do something with the restored values
         }
-        onLoad(vehicleId);
+
 
 
 
@@ -136,6 +143,8 @@ private final int GALLERY_REQ_CODE=1000;
         age_txt=findViewById(R.id.age_txt);
         driverStatusCheckbox = findViewById(R.id.driver_status);
         int driverStatus = driverStatusCheckbox.isChecked() ? 1 : 0;
+
+        onLoad(vehicleId);
 
 
 
@@ -314,26 +323,25 @@ private final int GALLERY_REQ_CODE=1000;
                     bookingData.put("status",booking.getStatus());
                     bookingData.put("user_mail",booking.getUserEmail());
 
-                    String bookingKey = myRef.push().getKey();
-                    myRef.child(bookingKey).setValue(bookingData);
-                   // myRef.push().setValue(bookingData);
-
-                myRef.setValue(bookingData)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Data saved successfully
-                                Intent intent=new Intent(Booking_details.this,GaurantorDetails.class);
-                                startActivity(intent);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Error occurred while saving data
-                                System.out.println("data insertion error");
-                            }
-                        });
+//                    String bookingKey = myRef.push().getKey();
+//                    myRef.child(bookingKey).setValue(bookingData);
+//                   // myRef.push().setValue(bookingData);
+//
+//                    myRef.setValue(bookingData).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void aVoid) {
+//                                // Data saved successfully
+//                                Intent intent=new Intent(Booking_details.this,GaurantorDetails.class);
+//                                startActivity(intent);
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                // Error occurred while saving data
+//                                System.out.println("data insertion error");
+//                            }
+//                        });
 
 
                 //Upload Image to Firebase datastore
@@ -493,45 +501,72 @@ private final int GALLERY_REQ_CODE=1000;
     }
 
     public void onLoad(int vid) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference();
 
-        Query query = databaseReference.child("vehicle").orderByChild("id").equalTo(vid);
+        DBConnection dbConnection=new DBConnection();
+        connection=dbConnection.getConnection();
+        if (connection != null) {
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    List<Vehicle> vehicles = new ArrayList<>();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        System.out.println("Test this one===============");
-                        Vehicle vehicle = snapshot.getValue(Vehicle.class);
-                        vehicles.add(vehicle);
+            try {
+                String query = "SELECT * FROM [slcrms].[dbo].[vehicle] WHERE id = ?";
+                PreparedStatement statement = null;
+                statement = connection.prepareStatement(query);
+                statement.setInt(1, vid);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    Vehicle vehicle =new Vehicle();
+                    vehicle.setImage("https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-4.jpeg?isig=0&q=75");
+                    vehicle.setTitle(resultSet.getString(2));
+
+                    System.out.println("============="+vehicle.getTitle());
+
+                    if (vehicle.getImage() != null) {
+                        Glide.with(imageViewVehicle.getContext())
+                                .load(vehicle.getImage())
+                                .into(imageViewVehicle);
+
                     }
-
-                    for (Vehicle vehicle : vehicles) {
-                        System.out.println("=====================" + vehicle.getImage() + "===="+getVehicleId());
-                        if (vehicle.getImage() != null) {
-
-                            Glide.with(imageViewVehicle.getContext())
-                                    .load(vehicle.getImage())
-                                    .into(imageViewVehicle);
-                            collapsingToolbarLayout.setTitle(vehicle.getTitle());
-                        }
-                    }
-                } else {
-                    System.out.println("Data does not exist!!");
+                    collapsingToolbarLayout.setTitle(vehicle.getTitle());
                 }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle any errors
-                // ...
+            try {
+                email= UserSingleton.getInstance().getUserEmail();
+                String query = "SELECT * FROM [slcrms].[dbo].[user] WHERE email = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, email);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                if(resultSet.next()){
+                    UserHelperClass userHelperClass=new UserHelperClass();
+                    userHelperClass.setRegName(resultSet.getString(2));
+                    userHelperClass.setEmail(resultSet.getString(4));
+                    userHelperClass.setUserName(resultSet.getString(6));
+                    userHelperClass.setIdNumber(resultSet.getString(3));
+                    userHelperClass.setPhonenNumber(resultSet.getString(5));
+                    userHelperClass.setPassword(resultSet.getString(9));
+
+
+                    name_txt.setText(userHelperClass.getRegName());
+                    nic_txt.setText(userHelperClass.getIdNumber());
+                    mobile_txt.setText(userHelperClass.getPhonenNumber());
+
+                }
+
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        });
+
+        }else {
+            Context context = getApplicationContext();
+            Toast.makeText(context, "Check the connection!", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
-
-    }
+}

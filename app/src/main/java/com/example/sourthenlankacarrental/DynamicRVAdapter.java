@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.ViewHolder> {

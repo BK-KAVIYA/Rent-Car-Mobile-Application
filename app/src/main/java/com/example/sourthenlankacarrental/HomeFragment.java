@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -74,7 +75,8 @@ public class HomeFragment extends Fragment{
                     vehicle.setTitle(resultSet.getString(2));
                     vehicle.setRating(5);
                     vehicle.setDescription("Test description");
-                    vehicle.setImage("https://github.com/BK-KAVIYA/Rent-Car-Mobile-Application/blob/d5d45b8181ece3c34e1a7d5af6b2dccfe27792a1/app/Image/rangerover.png");
+
+                    vehicle.setImage("https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-4.jpeg?isig=0&q=75");
 
                     itemVehicle.add(new DynamicItemList(vehicle.getId(),vehicle.getTitle(), vehicle.getDescription(), vehicle.getRating(), vehicle.getImage()));
 
