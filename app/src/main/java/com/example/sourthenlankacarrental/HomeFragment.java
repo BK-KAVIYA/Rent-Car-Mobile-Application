@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment{
                     vehicle.setTitle(resultSet.getString(2));
                     vehicle.setRating(5);
                     vehicle.setDescription("Test description");
-                    vehicle.setImage(resultSet.getString(8));
+                    vehicle.setImage("https://github.com/BK-KAVIYA/Rent-Car-Mobile-Application/blob/d5d45b8181ece3c34e1a7d5af6b2dccfe27792a1/app/Image/rangerover.png");
 
                     itemVehicle.add(new DynamicItemList(vehicle.getId(),vehicle.getTitle(), vehicle.getDescription(), vehicle.getRating(), vehicle.getImage()));
 
