@@ -13,9 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.sourthenlankacarrental.BookingDetails.MyBookingFragment;
+import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.user.UserHelperClass;
+import com.example.sourthenlankacarrental.user.UserSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -28,6 +31,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,23 +45,19 @@ public class SettingFragment extends Fragment {
 
 
     private String email=null;
-    private DatabaseReference databaseReference;
+
+    private Connection connection;
     private TextInputEditText fullname,uemail,uname,idNumber,mobile,password;
     private Button profileButton;
-
     RelativeLayout myRelativeLayout;
 
-    FirebaseUser user;
 
 
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       // super.onCreate(savedInstanceState);
-        // Inflate the layout for this fragment
-//        setContentView(R.layout.activity_gaurantor_details);
-//        getSupportActionBar().hide();
+
         View view = inflater.inflate(R.layout.activity_user_profile, container, false);
         fullname=view.findViewById(R.id.full_name_profile);
         uemail=view.findViewById(R.id.email_profile);
@@ -66,20 +69,14 @@ public class SettingFragment extends Fragment {
         myRelativeLayout = view.findViewById(R.id.mybooking);
 
 
-        // Get another reference to the root node of the database
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference usersRef = databaseReference.child("users");
+        DBConnection dbConnection=new DBConnection();
+        connection=dbConnection.getConnection();
 
-        // Add a ValueEventListener to retrieve data from the "users" node in the database
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            email = user.getEmail();
-        }
+        email= UserSingleton.getInstance().getUserEmail();
 
         myRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //System.out.println("============================================");
 
                 Context context = requireContext(); // or getContext() if you're inside a Fragment
                 Intent intent = new Intent(context, MyBookingFragment.class);
@@ -90,99 +87,73 @@ public class SettingFragment extends Fragment {
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String fullName = fullname.getText().toString();
-                String userName = uname.getText().toString();
+                String address = uname.getText().toString();
                 String userEmail = uemail.getText().toString();
                 String phoneNumber = mobile.getText().toString();
                 String idNumberValue = idNumber.getText().toString();
                 String passwordValue = password.getText().toString();
                 String cPasswordValue = password.getText().toString();
 
-//                Map<String, Object> updates = new HashMap<>();
-//                updates.put("regName", fullName);
-//                updates.put("userName", userName);
-//                updates.put("email", userEmail);
-//                updates.put("phoneNumber", phoneNumber);
-//                updates.put("idNumber", idNumberValue);
-//                updates.put("password", passwordValue);
-//                updates.put("cPassword", cPasswordValue);
+                PreparedStatement statement = null;
+                try {
+                    String query = "UPDATE [slcrms].[dbo].[user] SET name = ?,nic = ?,phone = ?,address = ?,password = ? WHERE email = ?";
+                    statement = connection.prepareStatement(query);
+                    statement.setString(1, fullName);
+                    statement.setString(2, idNumberValue);
+                    statement.setString(3, phoneNumber);
+                    statement.setString(4, address);
+                    statement.setString(5, passwordValue);
+                    statement.setString(6, email);
 
+                    int rowsAffected = statement.executeUpdate();
+                    if (rowsAffected > 0) {
+                        Context context = getContext();
+                        Toast.makeText(context, "Update Successfully!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Context context = getContext();
+                        Toast.makeText(context, "Update Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
 
-
-                // Assuming you have already initialized the Firebase app and the user is authenticated
-                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                String userID = currentUser.getUid(); // Get the user ID of the current user
-
-                // Assuming you have a Firebase reference to a location called "users"
-                DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users").child(userID);
-
-                // Define the updates object
-                Map<String, Object> updates = new HashMap<>();
-                updates.put("regName",userName);
-                updates.put("userName", fullName);
-                updates.put("email", userEmail);
-                updates.put("phoneNumber", phoneNumber);
-                updates.put("idNumber", idNumberValue);
-                updates.put("password", passwordValue);
-                updates.put("cPassword", passwordValue);
-
-                // Perform the update
-                usersRef.updateChildren(updates)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                System.out.println("Update successful!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                System.out.println("Update failed: " + e.getMessage());
-                            }
-                        });
-
-                System.out.println("Called the button");
             }
         });
 
-                    // Get another reference to the root node of the database
-                    databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
+                    try {
+                        String query = "SELECT * FROM [slcrms].[dbo].[user] WHERE email = ?";
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        statement.setString(1, email);
 
-                    // Create a query to retrieve the corresponding Vehicle object from the "users" node
-                    Query query = databaseReference.child("users").orderByChild("email").equalTo(email);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
+                        ResultSet resultSet = statement.executeQuery();
 
-                                UserHelperClass userHelperClass=new UserHelperClass();
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    UserHelperClass usc = snapshot.getValue(UserHelperClass.class);
-                                    fullname.setText(usc.getRegName());
-                                    uemail.setText(usc.getEmail());
-                                    uname.setText(usc.getUserName());
-                                    idNumber.setText(usc.getIdNumber());
-                                    mobile.setText(usc.getPhonenNumber());
-                                    password.setText(usc.getPassword());
+                        if(resultSet.next()){
+                            UserHelperClass userHelperClass=new UserHelperClass();
+                            userHelperClass.setRegName(resultSet.getString(2));
+                            userHelperClass.setEmail(resultSet.getString(4));
+                            userHelperClass.setUserName(resultSet.getString(6));
+                            userHelperClass.setIdNumber(resultSet.getString(3));
+                            userHelperClass.setPhonenNumber(resultSet.getString(5));
+                            userHelperClass.setPassword(resultSet.getString(9));
 
 
-                                    System.out.println("User Details" + usc.toString());
-                                }
-
-
-                               // dynamicRVAdapter.notifyDataSetChanged();
-                            } else {
-                                // Handle case when data doesn't exist
-                            }
+                            fullname.setText(userHelperClass.getRegName());
+                            uemail.setText(userHelperClass.getEmail());
+                            uname.setText(userHelperClass.getUserName());
+                            idNumber.setText(userHelperClass.getIdNumber());
+                            mobile.setText(userHelperClass.getPhonenNumber());
+                            password.setText(userHelperClass.getPassword());
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            // Handle the error
-                        }
-                    });
+
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
             return view;
         }
 

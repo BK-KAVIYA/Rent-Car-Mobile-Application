@@ -19,6 +19,10 @@ public class Vehicle {
     private String title;
     private String transmit;
 
+    private String description;
+
+    private int rating;
+
 
     public Vehicle() {
     }
@@ -46,6 +50,22 @@ public class Vehicle {
 
     public void setAddition_price_per_hour(double addition_price_per_hour) {
         this.addition_price_per_hour = addition_price_per_hour;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public String getTransmit() {

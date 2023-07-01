@@ -182,7 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="User Name">
+                android:hint="Address">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_name_profile"

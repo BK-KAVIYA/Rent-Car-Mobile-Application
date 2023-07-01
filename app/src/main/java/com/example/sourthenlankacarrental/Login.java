@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.sourthenlankacarrental.Connection.DBConnection;
+import com.example.sourthenlankacarrental.user.UserSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -34,6 +36,8 @@ public class Login extends AppCompatActivity {
     TextView logoText,sloganText;
     ProgressBar progressBar;
     TextInputLayout email,password;
+
+    Connection connection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,8 +85,7 @@ public class Login extends AppCompatActivity {
                 if (!isValidated){
                     return;
                 }else {
-                    System.out.println("Done");
-                    System.out.println(email+"kk"+"kk"+password);
+
                     loginAccountInFirebase(Email,Password);
                 }
             }
@@ -93,57 +96,60 @@ public class Login extends AppCompatActivity {
     }
     void loginAccountInFirebase(String email,String upassword){
 
-//        try {
-//            Connection databaseConnection = DatabaseConnection.getConnection();
-//            if (databaseConnection != null) {
-//                String query = "SELECT * FROM user WHERE email='"+email+"'";
-//                PreparedStatement statement = databaseConnection.prepareStatement(query);
-//
-//                ResultSet resultSet = statement.executeQuery();
-//
-//                while (resultSet.next()) {
-//
-//                    String uemail=resultSet.getString("email");
-//                    String password=resultSet.getString("password");
-//
-//                    // Do something with the retrieved data
-//                }
-//                if(password.equals(upassword)){
-//                    startActivity(new Intent(Login.this,Dashboard.class));
-//                    finish();
-//                }else{
-//                    System.out.println("password incorrect");
-//                }
-//                resultSet.close();
-//                statement.close();
-//                databaseConnection.close();
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            DBConnection dbConnection=new DBConnection();
+            connection=dbConnection.getConnection();
+            if (connection != null) {
 
 
-        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-        changeInProgress(true);
-        firebaseAuth.signInWithEmailAndPassword(email,upassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                changeInProgress(false);
-                if(task.isSuccessful()){
-                    //task successfull
-                    if (firebaseAuth.getCurrentUser().isEmailVerified()){
-                        //go to main activity
-                        startActivity(new Intent(Login.this,Dashboard.class));
-                        finish();
-                    }else{
-                        Utility.showToast(Login.this,"Email not verified, Please verify your Email");
-                    }
+
+                String query = "SELECT * FROM [slcrms].[dbo].[user] WHERE email = ? AND password = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, email);
+                statement.setString(2, upassword);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    UserSingleton.getInstance().setUserEmail(email);
+                    startActivity(new Intent(Login.this,Dashboard.class));
+                    finish();
+
+                    // Do something with the retrieved data
                 }else{
-                    //task failure
-                    Utility.showToast(Login.this,task.getException().getLocalizedMessage());
+                    System.out.println("password incorrect");
                 }
+
+                resultSet.close();
+                statement.close();
+                connection.close();
             }
-        });
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+//        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+//        changeInProgress(true);
+//        firebaseAuth.signInWithEmailAndPassword(email,upassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                changeInProgress(false);
+//                if(task.isSuccessful()){
+//                    //task successfull
+//                    if (firebaseAuth.getCurrentUser().isEmailVerified()){
+//                        //go to main activity
+//                        startActivity(new Intent(Login.this,Dashboard.class));
+//                        finish();
+//                    }else{
+//                        Utility.showToast(Login.this,"Email not verified, Please verify your Email");
+//                    }
+//                }else{
+//                    //task failure
+//                    Utility.showToast(Login.this,task.getException().getLocalizedMessage());
+//                }
+//            }
+//        });
     }
 
     void changeInProgress(boolean inProgress){

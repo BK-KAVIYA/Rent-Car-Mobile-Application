@@ -3,12 +3,15 @@ package com.example.sourthenlankacarrental;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.user.UserHelperClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,6 +21,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class SingUp extends AppCompatActivity {
 
     //variable
@@ -25,6 +32,8 @@ public class SingUp extends AppCompatActivity {
     Button regBtn,regToLoginbtn;
     ProgressBar progressBar;
     FirebaseDatabase rootNode;
+
+    Connection connection;
     DatabaseReference reference;
 
 
@@ -74,36 +83,45 @@ public class SingUp extends AppCompatActivity {
     }
     void createAccountFirebase(String email,String password){
         changeInProgress(true);
-        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(SingUp.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                changeInProgress(false);
-                if(task.isSuccessful()){
-                    //create account is done
-                    String name=regName.getEditText().getText().toString();
-                    String uName=userName.getEditText().getText().toString();
-                    String phoneNumber=phonenNumber.getEditText().getText().toString();
-                    String IDNumber=idNumber.getEditText().getText().toString();
-                    String cPwd=cPassword.getEditText().getText().toString();
 
-                    rootNode=FirebaseDatabase.getInstance();
-                    reference=rootNode.getReference("users");
+        DBConnection dbConnection=new DBConnection();
+        connection=dbConnection.getConnection();
+        if (connection != null) {
+            String name=regName.getEditText().getText().toString();
+            String uName=userName.getEditText().getText().toString();
+            String phoneNumber=phonenNumber.getEditText().getText().toString();
+            String IDNumber=idNumber.getEditText().getText().toString();
+            String cPwd=cPassword.getEditText().getText().toString();
 
-                    UserHelperClass helperClass=new UserHelperClass(name,uName,email,phoneNumber,IDNumber,password,cPwd);
-                    reference.child(IDNumber).setValue(helperClass);
+            String query = "INSERT INTO [slcrms].[dbo].[user] (name, nic, email,phone,address,image,role,password) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(query);
+                statement.setString(1, name);
+                statement.setString(2, IDNumber);
+                statement.setString(3, email);
+                statement.setString(4, phoneNumber);
+                statement.setString(5, uName);
+                statement.setString(6, "user4.jpg");
+                statement.setString(7, "user");
+                statement.setString(8, password);
 
-                    Utility.showToast(SingUp.this,"Succefully create account, Check email to verify");
-                    firebaseAuth.getCurrentUser().sendEmailVerification();
-                    firebaseAuth.signOut();
+
+                int rowsAffected = statement.executeUpdate();
+                if (rowsAffected > 0) {
+                    Context context = getApplicationContext();
+                    Toast.makeText(context, "Register Successfully!", Toast.LENGTH_SHORT).show();
                     finish();
-                }else {
-                    //failure
-                    Utility.showToast(SingUp.this,task.getException().getLocalizedMessage());
-
+                } else {
+                    Context context = getApplicationContext();
+                    Toast.makeText(context, "Register Failed!", Toast.LENGTH_SHORT).show();
                 }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        });
+
+        }
+
     }
 
     void changeInProgress(boolean inProgress){

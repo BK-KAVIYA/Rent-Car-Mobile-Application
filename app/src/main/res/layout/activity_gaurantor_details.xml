@@ -206,7 +206,7 @@
                 android:layout_marginLeft="120dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nic Coppy"
+                android:text="NIC Copy"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

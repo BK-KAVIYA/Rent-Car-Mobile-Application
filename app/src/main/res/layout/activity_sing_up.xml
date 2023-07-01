@@ -34,7 +34,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SingUp to Start Your new Journey"
+        android:text="Sign Up to Start Your new Journey"
         android:textSize="18sp"
         android:transitionName="logo_desc"/>
 
@@ -160,7 +160,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sing Up"
+            android:text="Sign Up"
             android:background="#000"
             android:textColor="#fff"
             android:id="@+id/reg_btn"

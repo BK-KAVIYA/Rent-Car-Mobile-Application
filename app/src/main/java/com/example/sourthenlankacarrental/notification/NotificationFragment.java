@@ -31,9 +31,9 @@ public class NotificationFragment extends Fragment {
 
         dataList = new ArrayList<>();
         dataList.add(new Notification("Vehicle Booking Confirmation", "Booking has been successfully confirmed.", 4, 12.12));
-        dataList.add(new Notification("Vehicle Return", "Thank you for returning your rental vehicle", 4, 12.20));
-        dataList.add(new Notification("Payment Confirmation", "Payment has been successfully processed. ", 4, 15.20));
-        dataList.add(new Notification("Vehicle Booking Confirmation", "Booking has been successfully confirmed.", 4, 17.30));
+        dataList.add(new Notification("Vehicle Return", "Thank you for returning your rental vehicle", 4, 12.14));
+        dataList.add(new Notification("Payment Confirmation", "Payment has been successfully processed. ", 4, 15.23));
+        dataList.add(new Notification("Vehicle Booking Confirmation", "Booking has been successfully confirmed.", 4, 17.35));
 
         // Add more items as needed
 
