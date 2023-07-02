@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.sourthenlankacarrental.R;
 import com.example.sourthenlankacarrental.notification.NotificationViewHolder;
 
@@ -33,7 +34,13 @@ public class BookingManager extends RecyclerView.Adapter<BookingViewHolder> {
         holder.startDate.setText(bookingList.get(position).getStartDate());
         holder.endDate.setText(String.valueOf(bookingList.get(position).getEndDate()));
         holder.status.setText(String.valueOf(bookingList.get(position).getStatus()));
-       // holder.endDate.setText(String.valueOf(bookingList.get(position).getEndDate()));
+
+//        String imageUrl = bookingList.get(position).getImage();
+//        if (imageUrl != null) {
+//            Glide.with(holder.imageView.getContext())
+//                    .load(imageUrl)
+//                    .into(holder.imageView);
+//        }
     }
 
     @Override

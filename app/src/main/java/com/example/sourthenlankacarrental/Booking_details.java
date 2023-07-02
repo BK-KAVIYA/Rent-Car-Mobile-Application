@@ -32,6 +32,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.sourthenlankacarrental.BookingDetails.Booking;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.user.UserHelperClass;
@@ -60,6 +64,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -259,7 +265,7 @@ private final int GALLERY_REQ_CODE=1000;
                 String age = age_txt.getText().toString().trim();
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-                String currentUserEmail = currentUser.getEmail();
+                String currentUserEmail = UserSingleton.getInstance().getUserEmail();
 
                 // Validate name
                 if (name.isEmpty()) {
@@ -303,25 +309,83 @@ private final int GALLERY_REQ_CODE=1000;
                     booking.setAge(age);
                 }
 
-                booking.setStatus("review");
+                LocalDate currentDate = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    currentDate = LocalDate.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String formattedDate = currentDate.format(formatter);
+                    System.out.println("Date----------"+formattedDate);
+                    booking.setBooking_date(formattedDate);
+                }
+
+
+                booking.setStatus(0);
                 booking.setDriverStatus(driverStatus);
                 booking.setUserEmail(currentUserEmail);
+                booking.setNic_url("people_1.png");
+                booking.setVehicle_id(getIntent().getIntExtra("vid",1));
 
 
+                DBConnection dbConnection=new DBConnection();
+                connection=dbConnection.getConnection();
+                if (connection != null) {
 
-                    Map<String, Object> bookingData = new HashMap<>();
-                    bookingData.put("name", booking.getName());
-                    bookingData.put("phone", booking.getPhone());
-                    bookingData.put("nic", booking.getNic());
-                    bookingData.put("gender", booking.getGender());
-                    bookingData.put("age", booking.getAge());
-                    bookingData.put("district", booking.getDistrict());
-                    bookingData.put("start_date", booking.getStartDate());
-                    bookingData.put("end_date", booking.getEndDate());
-                    bookingData.put("vehicle_id",getVehicleId());
-                    bookingData.put("driver_status",booking.getDriverStatus());
-                    bookingData.put("status",booking.getStatus());
-                    bookingData.put("user_mail",booking.getUserEmail());
+                    String query = "INSERT INTO [slcrms].[dbo].[booking] (customer_nic, customer_name, customer_email,customer_phone,vehicle_id,from_date,to_date,posting_date,district,driver_status,gender,status,is_complete,is_deleted) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";
+                    PreparedStatement statement = null;
+                    try {
+                        statement = connection.prepareStatement(query);
+                        statement.setString(1, booking.getNic());
+                        statement.setString(2, booking.getName());
+                        statement.setString(3, booking.getUserEmail());
+                        statement.setString(4, booking.getPhone());
+                        statement.setInt(5, booking.getVehicle_id());
+                        statement.setString(6, booking.getStartDate());
+                        statement.setString(7, booking.getEndDate());
+                        statement.setString(8, booking.getBooking_date());
+                        statement.setString(9, booking.getDistrict());
+                        statement.setInt(10, booking.getDriverStatus());
+                        statement.setString(11, booking.getGender());
+                        statement.setInt(12, booking.getStatus());
+                        statement.setInt(13, booking.getIs_complete());
+                        statement.setInt(14, booking.getIs_delete());
+
+
+                        int rowsAffected = statement.executeUpdate();
+                        if (rowsAffected > 0) {
+
+                            // Data saved successfully
+                            Intent intent=new Intent(Booking_details.this,GaurantorDetails.class);
+                            startActivity(intent);
+                            Context context = getApplicationContext();
+                            Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Context context = getApplicationContext();
+                            Toast.makeText(context, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+
+            }
+
+
+//
+//                    Map<String, Object> bookingData = new HashMap<>();
+//                    bookingData.put("name", booking.getName());
+//                    bookingData.put("phone", booking.getPhone());
+//                    bookingData.put("nic", booking.getNic());
+//                    bookingData.put("gender", booking.getGender());
+//                    bookingData.put("age", booking.getAge());
+//                    bookingData.put("district", booking.getDistrict());
+//                    bookingData.put("start_date", booking.getStartDate());
+//                    bookingData.put("end_date", booking.getEndDate());
+//                    bookingData.put("vehicle_id",getVehicleId());
+//                    bookingData.put("driver_status",booking.getDriverStatus());
+//                    bookingData.put("status",booking.getStatus());
+//                    bookingData.put("user_mail",booking.getUserEmail());
 
 //                    String bookingKey = myRef.push().getKey();
 //                    myRef.child(bookingKey).setValue(bookingData);
@@ -344,60 +408,61 @@ private final int GALLERY_REQ_CODE=1000;
 //                        });
 
 
-                //Upload Image to Firebase datastore
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference();
+//                //Upload Image to Firebase datastore
+//                FirebaseStorage storage = FirebaseStorage.getInstance();
+//                StorageReference storageRef = storage.getReference();
+//
+//                String filename = "image_" + System.currentTimeMillis() + ".jpg";
+//                StorageReference imageRef = storageRef.child(filename);
+//
+//                // Get the drawable from the ImageView
+//                Drawable drawable = nicimage.getDrawable();
+//                BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+//                Bitmap bitmap = bitmapDrawable.getBitmap();
+//
+//                // Compress the image on a background thread
+//                new AsyncTask<Bitmap, Void, byte[]>() {
+//                    @Override
+//                    protected byte[] doInBackground(Bitmap... bitmaps) {
+//                        Bitmap compressedBitmap = Bitmap.createScaledBitmap(bitmaps[0], 800, 800, true);
+//                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                        compressedBitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+//                        return baos.toByteArray();
+//                    }
+//
+//                    @Override
+//                    protected void onPostExecute(byte[] imageData) {
+//                        // Upload the image to Firebase Storage
+//                        UploadTask uploadTask = imageRef.putBytes(imageData);
+//                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                // Image upload success, retrieve the download URL
+//                                Task<Uri> downloadUrlTask = imageRef.getDownloadUrl();
+//                                downloadUrlTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                    @Override
+//                                    public void onSuccess(Uri downloadUrl) {
+//                                        // Image download URL retrieved, store it in the Firebase Realtime Database
+//                                        String imageUrl = downloadUrl.toString();
+//                                        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+//                                        Map<String, Object> usernicData = new HashMap<>();
+//                                        usernicData.put("image_url", imageUrl);
+//                                        usernicData.put("user_email", booking.getUserEmail());
+//
+//                                        databaseRef.child("customer_nic").setValue(usernicData);
+//                                    }
+//                                });
+//                            }
+//                        });
+//                    }
+//                }.execute(bitmap);
 
-                String filename = "image_" + System.currentTimeMillis() + ".jpg";
-                StorageReference imageRef = storageRef.child(filename);
-
-                // Get the drawable from the ImageView
-                Drawable drawable = nicimage.getDrawable();
-                BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-                Bitmap bitmap = bitmapDrawable.getBitmap();
-
-                // Compress the image on a background thread
-                new AsyncTask<Bitmap, Void, byte[]>() {
-                    @Override
-                    protected byte[] doInBackground(Bitmap... bitmaps) {
-                        Bitmap compressedBitmap = Bitmap.createScaledBitmap(bitmaps[0], 800, 800, true);
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        compressedBitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-                        return baos.toByteArray();
-                    }
-
-                    @Override
-                    protected void onPostExecute(byte[] imageData) {
-                        // Upload the image to Firebase Storage
-                        UploadTask uploadTask = imageRef.putBytes(imageData);
-                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // Image upload success, retrieve the download URL
-                                Task<Uri> downloadUrlTask = imageRef.getDownloadUrl();
-                                downloadUrlTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri downloadUrl) {
-                                        // Image download URL retrieved, store it in the Firebase Realtime Database
-                                        String imageUrl = downloadUrl.toString();
-                                        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
-                                        Map<String, Object> usernicData = new HashMap<>();
-                                        usernicData.put("image_url", imageUrl);
-                                        usernicData.put("user_email", booking.getUserEmail());
-
-                                        databaseRef.child("customer_nic").setValue(usernicData);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }.execute(bitmap);
-
-                }
-            });
+                });
+         //   });
 
 
         nicimage=findViewById(R.id.nicgallery);
+
         Button btnGallery=findViewById(R.id.nicbtn);
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -516,15 +581,33 @@ private final int GALLERY_REQ_CODE=1000;
 
                 while (resultSet.next()) {
                     Vehicle vehicle =new Vehicle();
-                    vehicle.setImage("https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-4.jpeg?isig=0&q=75");
+                    String storage="H:\\img\\rangerover.png";
+                    vehicle.setImage(storage);
                     vehicle.setTitle(resultSet.getString(2));
 
-                    System.out.println("============="+vehicle.getTitle());
-
                     if (vehicle.getImage() != null) {
-                        Glide.with(imageViewVehicle.getContext())
-                                .load(vehicle.getImage())
-                                .into(imageViewVehicle);
+                       // int resourceId = imageViewVehicle.getContext().getResources().getIdentifier(vehicle.getImage(), "drawable", imageViewVehicle.getContext().getPackageName());
+//                        Glide.with(imageViewVehicle.getContext())
+//                                .load(vehicle.getImage())
+//                                .into(imageViewVehicle);
+
+                        String url = "https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-4.jpeg?isig=0&q=75";
+
+                        Glide.with(imageViewVehicle.getContext()).load(Uri.parse(url))
+                                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                                .error(R.drawable.avatar1)
+                                .listener(new RequestListener<Drawable>() {
+                                    @Override
+                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                        return false;
+                                    }
+
+                                }).into(imageViewVehicle);
 
                     }
                     collapsingToolbarLayout.setTitle(vehicle.getTitle());

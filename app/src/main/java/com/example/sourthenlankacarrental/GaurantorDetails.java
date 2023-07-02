@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sourthenlankacarrental.Guarantor.Guarantor;
 import com.example.sourthenlankacarrental.Payment.PaymentActivity;
+import com.example.sourthenlankacarrental.user.UserSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -150,7 +151,7 @@ public class GaurantorDetails extends AppCompatActivity implements AdapterView.O
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        String bkUser_Email = currentUser.getEmail();
+        String bkUser_Email = UserSingleton.getInstance().getUserEmail();
 
         booking_btn.setOnClickListener(new View.OnClickListener() {
             @Override

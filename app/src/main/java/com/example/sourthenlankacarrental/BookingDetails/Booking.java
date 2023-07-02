@@ -4,7 +4,7 @@ public class Booking {
     private String title;
     private String startDate;
     private String endDate;
-    private String status;
+    private int status;
     private String name;
     private String phone;
     private String nic;
@@ -12,16 +12,21 @@ public class Booking {
     private String age;
     private String district;
     private String userEmail;
-
     private int driverStatus;
     private String nic_url;
+    private int vehicle_id;
 
-    private String vehicle_id;
+    private String booking_date;
 
+    private int is_complete;
+
+    private int is_delete;
+
+    private String vehicle_imgUrl;
     public Booking() {
     }
 
-    public Booking(String startDate, String endDate, String status, String name, String phone, String nic, String gender, String age, String district) {
+    public Booking(String startDate, String endDate, int status, String name, String phone, String nic, String gender, String age, String district) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -33,11 +38,12 @@ public class Booking {
         this.district = district;
     }
 
-    public Booking(String title, String startDate, String endDate, String status) {
+    public Booking(String title, String startDate, String endDate, int status,String vehicle_imgUrl) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.vehicle_imgUrl=vehicle_imgUrl;
     }
 
     public String getUserEmail() {
@@ -136,19 +142,43 @@ public class Booking {
         this.endDate = endDate;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public String getVehicle_id() {
+    public int getVehicle_id() {
         return vehicle_id;
     }
 
-    public void setVehicle_id(String vehicle_id) {
+    public void setVehicle_id(int vehicle_id) {
         this.vehicle_id = vehicle_id;
+    }
+
+    public String getBooking_date() {
+        return booking_date;
+    }
+
+    public void setBooking_date(String booking_date) {
+        this.booking_date = booking_date;
+    }
+
+    public int getIs_complete() {
+        return is_complete;
+    }
+
+    public void setIs_complete(int is_complete) {
+        this.is_complete = is_complete;
+    }
+
+    public int getIs_delete() {
+        return is_delete;
+    }
+
+    public void setIs_delete(int is_delete) {
+        this.is_delete = is_delete;
     }
 }
