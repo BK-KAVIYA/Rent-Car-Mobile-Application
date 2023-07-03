@@ -37,6 +37,8 @@
         <activity
             android:name=".Messages.Message"
             android:exported="false" />
+        <activity android:name=".vehicale.VehicleDetails"
+            android:exported="true"/>
 
         <activity android:name=".SingUp" />
         <activity android:name=".Login" />

@@ -263,9 +263,9 @@ private final int GALLERY_REQ_CODE=1000;
                 String phone = mobile_txt.getText().toString().trim();
                 String nic = nic_txt.getText().toString().trim();
                 String age = age_txt.getText().toString().trim();
-                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-                String currentUserEmail = UserSingleton.getInstance().getUserEmail();
+//                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+//                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+//                String currentUserEmail = UserSingleton.getInstance().getUserEmail();
 
                 // Validate name
                 if (name.isEmpty()) {
@@ -321,7 +321,7 @@ private final int GALLERY_REQ_CODE=1000;
 
                 booking.setStatus(0);
                 booking.setDriverStatus(driverStatus);
-                booking.setUserEmail(currentUserEmail);
+                booking.setUserEmail(booking.getUserEmail());
                 booking.setNic_url("people_1.png");
                 booking.setVehicle_id(getIntent().getIntExtra("vid",1));
 

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.example.sourthenlankacarrental.vehicale.VehicleDetails;
 
 
 import androidx.annotation.NonNull;
@@ -53,14 +54,11 @@ public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.Vie
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                System.out.println("Inside main-------------------------"+vId);
-//                booking_details=new Booking_details();
-//                booking_details.setVehicleId(vId);
 
                 // Handle item click here
                 // Start the new activity
                 Context context = view.getContext();
-                Intent intent = new Intent(context, Booking_details.class);
+                Intent intent = new Intent(context, VehicleDetails.class);
                 // Pass any extra data to the new activity if needed
                 intent.putExtra("vid", vId);
                 context.startActivity(intent);
