@@ -1,12 +1,14 @@
 package com.example.sourthenlankacarrental.Guarantor;
 
 public class Guarantor {
-    private String id;
+    private int id;
+
+    private int reserved_id;
     private String name;
     private String phone;
     private String nic;
     private String gender;
-    private String age;
+    private int age;
     private String district;
     private String nic_url;
     private String customer_email;
@@ -14,7 +16,7 @@ public class Guarantor {
     public Guarantor() {
     }
 
-    public Guarantor(String id, String name, String phone, String nic, String gender, String age, String district, String nic_url, String customer_email) {
+    public Guarantor(int id, String name, String phone, String nic, String gender, int age, String district, String nic_url, String customer_email) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -26,11 +28,11 @@ public class Guarantor {
         this.customer_email = customer_email;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -66,11 +68,11 @@ public class Guarantor {
         this.gender = gender;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -96,5 +98,13 @@ public class Guarantor {
 
     public void setCustomer_email(String customer_email) {
         this.customer_email = customer_email;
+    }
+
+    public int getReserved_id() {
+        return reserved_id;
+    }
+
+    public void setReserved_id(int reserved_id) {
+        this.reserved_id = reserved_id;
     }
 }

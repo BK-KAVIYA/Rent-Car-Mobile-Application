@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D6D6D6">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginEnd="10sp"
+        android:layout_marginBottom="10sp"
+        android:background="@drawable/popupbg"
+        android:padding="15sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Be gracious and considerate"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="**Customer Vehicle Booking Agreement**\n
+        \n 01.I see that the vehicle bearing the above number which I rented from SOUTHERN LANKA RENT A CAR AND TOURS can only be used for regular purposes.  I declare that I will take full responsibility if this vehicle is used for any illegal activities.  If the car is used for an illegal purpose during the time it is in my custody or is taken into the custody of any police or court due to an accident or drunk driving or any other reason, to pay the daily fees agreed with the company for the entire period of such possession.  I agree.\n
+        \n 02. That I will drive the car bearing the above number and that I will be liable for all damages and compensations that may arise from allowing another party to drive it.  (It is not related with car insurance.)\n
+        \n 03. I agree to maintain the above mentioned vehicle properly (check engine oil, brake oil radiator water and accessories) and use it carefully and check all documents such as income license, insurance certificate etc. of the vehicle.\n
+        \n 04. I agree to pay for any loss or damage that occurs while in my possession of the said vehicle from my money or insurance.  (For manual vehicles, I have to bear the damage caused by driving the clutch plate due to driving with my foot on the clutch, and the damage that may be caused by continuing to drive even though any signal indicating a fault in the vehicle is on.\n
+        \n 05. The agency will charge a daily tax for the days that the new owner is working on such repairs.  I agree to pay the agreed daily tax amount for each day it increases.\n
+        \n 06. I agree to pay the amount due to the company if the said car meets with an accident while in my possession or if the vehicle has to be loaded or loaded in the event of a break down.\n
+        \n 07. I understand that the institution will not provide the deposit until the amount due for loss or any other loss caused by an accident is assessed by the institution.  I agree to any course of action taken by the institution.\n
+        \n 08. I understand that I will not be able to keep the vehicle in my possession beyond the agreed number of days after taking delivery of the car.  I agree to pay an amount of Rs 800.00 for every hour of delay in keeping it so.  A fine of Rs\n
+        \n 09. After receiving the car, in addition to the number of days agreed upon, without informing the company or in the company\n
+        The company took possession of the said car without my consent\n
+        I agree to any legal action\n
+        \n 10. I agree that the above car will not be re-rented, pawned or given to any third party for any reason whatsoever.\n
+        \n 11. A deposit of Rs.  But I know that a reasonable amount can be deducted from that amount for the damages to the vehicle due to my negligence.\n
+        \n 12. If the above car gets into an accident due to my drunkenness, negligence or similar actions, or if it is destroyed by a thief, hostile kidnapping, terrorist act, I agree to pay the value of the car at the time I acquired the car and that amount will be paid to me. \n
+        \n 13. I warrant that the two guarantors who have signed on my behalf for this agreement shall also be subject to the terms of this agreement and will be equally liable on my behalf and will appear on my behalf at any time.\n
+        \n"
+            android:textSize="10sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp">
+
+            <TextView
+                android:id="@+id/Skip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Skip" />
+
+            <TextView
+                android:id="@+id/Gotit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:background="@color/colorAccent"
+                android:layout_alignParentEnd="true"
+                android:text="Agree" />
+
+        </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

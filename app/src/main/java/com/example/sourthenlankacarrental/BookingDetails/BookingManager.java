@@ -33,7 +33,13 @@ public class BookingManager extends RecyclerView.Adapter<BookingViewHolder> {
         holder.title.setText(bookingList.get(position).getTitle());
         holder.startDate.setText(bookingList.get(position).getStartDate());
         holder.endDate.setText(String.valueOf(bookingList.get(position).getEndDate()));
-        holder.status.setText(String.valueOf(bookingList.get(position).getStatus()));
+        String status;
+        if(bookingList.get(position).getStatus()==0){
+            status="Under Review";
+        }else{
+            status="Approved";
+        }
+        holder.status.setText(status);
 
 //        String imageUrl = bookingList.get(position).getImage();
 //        if (imageUrl != null) {

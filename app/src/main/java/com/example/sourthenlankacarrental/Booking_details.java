@@ -353,11 +353,25 @@ private final int GALLERY_REQ_CODE=1000;
                         int rowsAffected = statement.executeUpdate();
                         if (rowsAffected > 0) {
 
-                            // Data saved successfully
-                            Intent intent=new Intent(Booking_details.this,GaurantorDetails.class);
-                            startActivity(intent);
-                            Context context = getApplicationContext();
-                            Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show();
+                            String query1 = "SELECT * FROM [slcrms].[dbo].[booking] WHERE vehicle_id = ? AND posting_date = ?";
+                            PreparedStatement statement1 = connection.prepareStatement(query1);
+                            statement1.setInt(1, booking.getVehicle_id());
+                            statement1.setString(2, booking.getBooking_date());
+
+                            ResultSet resultSet1 = statement1.executeQuery();
+
+                            if (resultSet1.next()) {
+                                int bookingId=resultSet1.getInt(1);
+                                Intent intent=new Intent(Booking_details.this,GaurantorDetails.class);
+                                intent.putExtra("BID", bookingId);
+                                startActivity(intent);
+
+                                Context context = getApplicationContext();
+                                Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Context context = getApplicationContext();
+                                Toast.makeText(context, "Complete Previouse Step!", Toast.LENGTH_SHORT).show();
+                            }
 
                         } else {
                             Context context = getApplicationContext();

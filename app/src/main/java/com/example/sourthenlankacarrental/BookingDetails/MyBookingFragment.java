@@ -63,13 +63,13 @@ public class MyBookingFragment extends AppCompatActivity {
                     System.out.println("----------------"+resultSet.getInt("vehicle_id"));
                     String query1 = "SELECT * FROM [slcrms].[dbo].[vehicle] WHERE id = ?";
                     PreparedStatement statement1 = connection.prepareStatement(query1);
-                    statement.setInt(1, vehicle_id);
+                    statement1.setInt(1, vehicle_id);
 
-                    ResultSet resultSet1 = statement.executeQuery();
+                    ResultSet resultSet1 = statement1.executeQuery();
 
                     if (resultSet1.next()) {
-                        System.out.println("-----------------"+resultSet1.getString("title"));
-                        bookingList.add(new Booking(resultSet1.getString("title"), resultSet.getString("from_date"), resultSet.getString("to_date"), resultSet.getInt("status"), resultSet1.getString("image")));
+                        System.out.println("-----------------"+resultSet1.getString(2));
+                        bookingList.add(new Booking(resultSet1.getString(2), resultSet.getString("from_date"), resultSet.getString("to_date"), resultSet.getInt("status"), resultSet1.getString("image")));
                     } else {
                         System.out.println("password incorrect");
                     }
