@@ -324,7 +324,7 @@ private final int GALLERY_REQ_CODE=1000;
                 LocalDate currentDate = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     currentDate = LocalDate.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
                     String formattedDate = currentDate.format(formatter);
                     System.out.println("Date----------"+formattedDate);
                     booking.setBooking_date(formattedDate);

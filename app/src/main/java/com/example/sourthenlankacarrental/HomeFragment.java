@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment{
                     Vehicle vehicle=new Vehicle();
                     vehicle.setId(resultSet.getInt(1));
                     vehicle.setTitle(resultSet.getString(2));
-                    vehicle.setRating(5);
+                    vehicle.setRating(resultSet.getInt(4));
                     vehicle.setDescription("Test description");
 
                     vehicle.setImage("https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-4.jpeg?isig=0&q=75");

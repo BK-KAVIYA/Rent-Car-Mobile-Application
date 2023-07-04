@@ -9,6 +9,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
+        <TextView
+
+            android:fontFamily="@font/bangers"
+            android:id="@+id/app_name"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/dashbord_title"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Start Date"
-                android:id="@+id/startdate"
+                android:id="@+id/chstartdate"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -68,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="End Date"
-                android:id="@+id/end_date"
+                android:id="@+id/chend_date"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -90,10 +101,19 @@
                 android:layout_height="wrap_content"
                 android:text="Check Availability"
                 android:layout_marginTop="16dp"
-                android:onClick="checkAvailability" />
+                android:id="@+id/checkAvailability" />
 
 
         </LinearLayout>
+        <TextView
+            android:fontFamily="@font/bangers"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Avilable Vehicles"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/av_rv_1"
             android:layout_width="match_parent"

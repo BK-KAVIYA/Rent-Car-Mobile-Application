@@ -30,7 +30,7 @@ public class PaymentActivity extends AppCompatActivity {
         if (intent != null) {
             // Retrieve the saved values from the bundle
             BookingId = getIntent().getIntExtra("BID",10);
-            price = getIntent().getIntExtra("Price",1000);
+            price = getIntent().getDoubleExtra("Price",1000);
         }
         System.out.println("price------------------"+price);
 
@@ -39,8 +39,8 @@ public class PaymentActivity extends AppCompatActivity {
         card_number =findViewById(R.id.card_number_edittext);
         expire_date =findViewById(R.id.expiry_date_edittext);
         cvv =findViewById(R.id.cvv_edittext);
-
-        amount.setText((int) price);
+        String sprice="Rs:" +String.valueOf(price)+"0/=";
+        amount.setText(sprice);
         pay_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
