@@ -165,6 +165,32 @@
         android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/carAvailability"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/check_availability">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check Car Avilability"
+            android:fontFamily="@font/bangers"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+    <TextView
+        android:fontFamily="@font/bangers"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Todays Available Cars"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_1"
             android:layout_width="match_parent"

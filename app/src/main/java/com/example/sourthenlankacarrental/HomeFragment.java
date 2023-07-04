@@ -1,6 +1,8 @@
 package com.example.sourthenlankacarrental;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,8 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.example.sourthenlankacarrental.BookingDetails.CheckAvailability;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
+import com.example.sourthenlankacarrental.vehicale.VehicleDetails;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +43,7 @@ public class HomeFragment extends Fragment{
     Connection connection;
     private DatabaseReference databaseReference;
 
+    LinearLayout linearLayout;
     ArrayList<DynamicRVModel> item=new ArrayList();
     ArrayList<DynamicItemList> itemVehicle=new ArrayList();
     DynamicRVAdapter dynamicRVAdapter;
@@ -56,6 +62,17 @@ public class HomeFragment extends Fragment{
         DBConnection dbConnection=new DBConnection();
         connection=dbConnection.getConnection();
 
+        linearLayout=v.findViewById(R.id.carAvailability);
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, CheckAvailability.class);
+                // Pass any extra data to the new activity if needed
+                context.startActivity(intent);
+            }
+        });
         RecyclerView drv = v.findViewById(R.id.rv_1);
         drv.setLayoutManager(new LinearLayoutManager(container.getContext()));
         dynamicRVAdapter = new DynamicRVAdapter(itemVehicle);

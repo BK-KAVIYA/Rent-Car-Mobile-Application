@@ -66,6 +66,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -84,7 +85,7 @@ public class Booking_details extends AppCompatActivity implements AdapterView.On
     CheckBox driverStatusCheckbox;
     Booking booking=new Booking();
 
-
+    long differenceInDays;
     private String name,mobile,nic_num,gender_txt,age,district_text,nic_cpy,start_dt,end_dt,email;
     private int vehicleId;
     private FirebaseDatabase database;
@@ -263,9 +264,20 @@ private final int GALLERY_REQ_CODE=1000;
                 String phone = mobile_txt.getText().toString().trim();
                 String nic = nic_txt.getText().toString().trim();
                 String age = age_txt.getText().toString().trim();
-//                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-//                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-//                String currentUserEmail = UserSingleton.getInstance().getUserEmail();
+
+                // Define the date format
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+
+                // Parse the from date and to date strings into LocalDate objects
+                String fromDateStr = booking.getStartDate();
+                String toDateStr = booking.getEndDate();
+                LocalDate fromDate = LocalDate.parse(fromDateStr, dateFormatter);
+                LocalDate toDate = LocalDate.parse(toDateStr, dateFormatter);
+
+                // Calculate the difference in days
+                differenceInDays = ChronoUnit.DAYS.between(fromDate, toDate);
+
+                System.out.println("Difference in days: " + differenceInDays);
 
                 // Validate name
                 if (name.isEmpty()) {
@@ -321,7 +333,7 @@ private final int GALLERY_REQ_CODE=1000;
 
                 booking.setStatus(0);
                 booking.setDriverStatus(driverStatus);
-                booking.setUserEmail(booking.getUserEmail());
+                booking.setUserEmail(UserSingleton.getInstance().getUserEmail());
                 booking.setNic_url("people_1.png");
                 booking.setVehicle_id(getIntent().getIntExtra("vid",1));
 
@@ -364,6 +376,8 @@ private final int GALLERY_REQ_CODE=1000;
                                 int bookingId=resultSet1.getInt(1);
                                 Intent intent=new Intent(Booking_details.this,GaurantorDetails.class);
                                 intent.putExtra("BID", bookingId);
+                                intent.putExtra("DDIF",differenceInDays);
+                                intent.putExtra("VID",vehicleId);
                                 startActivity(intent);
 
                                 Context context = getApplicationContext();

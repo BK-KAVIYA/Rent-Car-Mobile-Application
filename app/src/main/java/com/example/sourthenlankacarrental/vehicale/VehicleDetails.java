@@ -2,26 +2,17 @@ package com.example.sourthenlankacarrental.vehicale;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.example.sourthenlankacarrental.Booking_details;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.R;
-import com.example.sourthenlankacarrental.Vehicle;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.sql.Connection;
@@ -102,7 +93,8 @@ public class VehicleDetails extends AppCompatActivity {
                     }
                     aircondition.setText(air);
                     String gea;
-                    if (String.valueOf(resultSet.getString(6)) == String.valueOf('M')) {
+                    String fgea=resultSet.getString(6);
+                    if (fgea.equals("M")) {
                         gea = "Manual";
                     } else {
                         gea = "Auto";
@@ -110,12 +102,17 @@ public class VehicleDetails extends AppCompatActivity {
                     gear.setText(gea);
                     aircondition.setText(air);
                     String fule;
-                    if (String.valueOf(resultSet.getString(4)) == String.valueOf('D')) {
+                    String fval=resultSet.getString(4);
+                    if (fval.equals("D")) {
                         fule = "Deasel";
                     } else {
                         fule = "Petrol";
                     }
                     gas.setText(fule);
+
+                    if('M'=='K'){
+
+                    }
 
                 }
 
@@ -128,7 +125,7 @@ public class VehicleDetails extends AppCompatActivity {
 
                 if (resultSet1.next()) {
                     collapsingToolbarLayout.setTitle(resultSet1.getString(2));
-                    String pricePerDay = "Rs " + resultSet1.getString("price_per_day") + "/= \\nper day";
+                    String pricePerDay = "Rs " + resultSet1.getString("price_per_day") + "/= per day";
                     price.setText(pricePerDay);
                 }
 

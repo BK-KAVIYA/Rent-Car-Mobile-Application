@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.Guarantor.Guarantor;
 import com.example.sourthenlankacarrental.Payment.PaymentActivity;
+import com.example.sourthenlankacarrental.calculate.PriceCalculator;
 import com.example.sourthenlankacarrental.user.UserSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,10 +58,13 @@ public class GaurantorDetails extends AppCompatActivity implements AdapterView.O
     ImageView imageViewVehicle,nicimage;
     TextView termsAndCondition;
 
+    double totalPrice;
     CheckBox checkBox;
     Spinner district_txt;
     Button booking_btn;
-    int BookingId;
+    int BookingId,vehicle_ID;
+
+    long Date_diff;
 
     RelativeLayout layout;
     @Override
@@ -73,7 +77,11 @@ public class GaurantorDetails extends AppCompatActivity implements AdapterView.O
         if (intent != null) {
             // Retrieve the saved values from the bundle
             BookingId = getIntent().getIntExtra("BID",10);
+            Date_diff = getIntent().getLongExtra("DDIF",10);
+            vehicle_ID = getIntent().getIntExtra("VID",10);
         }
+        PriceCalculator priceCalculator=new PriceCalculator(Date_diff,vehicle_ID);
+        totalPrice =priceCalculator.getTotalPrice();
 
         // Take the instance of Spinner and
         // apply OnItemSelectedListener on it which
@@ -270,6 +278,7 @@ public class GaurantorDetails extends AppCompatActivity implements AdapterView.O
                             int bookingId=guarantor.getReserved_id();
                             Intent intent=new Intent(GaurantorDetails.this, PaymentActivity.class);
                             intent.putExtra("BID", bookingId);
+                            intent.putExtra("Price",totalPrice);
                             startActivity(intent);
 
                             Context context = getApplicationContext();

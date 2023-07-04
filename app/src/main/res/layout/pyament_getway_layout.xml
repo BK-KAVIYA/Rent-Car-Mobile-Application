@@ -29,7 +29,7 @@
         android:id="@+id/payment_amount_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
+        android:textColor="@color/black"
         android:hint="Enter payment amount"
         android:padding="10dp" />
 
@@ -44,7 +44,7 @@
         android:id="@+id/card_number_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:textColor="@color/black"
         android:hint="Enter card number"
         android:padding="10dp" />
 
@@ -70,7 +70,7 @@
                 android:id="@+id/expiry_date_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:textColor="@color/black"
                 android:hint="MM/YY"
                 android:padding="10dp" />
         </LinearLayout>
@@ -91,7 +91,7 @@
                 android:id="@+id/cvv_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:textColor="@color/black"
                 android:hint="Enter CVV"
                 android:padding="10dp" />
         </LinearLayout>

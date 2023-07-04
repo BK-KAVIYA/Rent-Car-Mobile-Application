@@ -41,15 +41,13 @@
         \n 06. I agree to pay the amount due to the company if the said car meets with an accident while in my possession or if the vehicle has to be loaded or loaded in the event of a break down.\n
         \n 07. I understand that the institution will not provide the deposit until the amount due for loss or any other loss caused by an accident is assessed by the institution.  I agree to any course of action taken by the institution.\n
         \n 08. I understand that I will not be able to keep the vehicle in my possession beyond the agreed number of days after taking delivery of the car.  I agree to pay an amount of Rs 800.00 for every hour of delay in keeping it so.  A fine of Rs\n
-        \n 09. After receiving the car, in addition to the number of days agreed upon, without informing the company or in the company\n
-        The company took possession of the said car without my consent\n
-        I agree to any legal action\n
+        \n 09. After receiving the car, in addition to the number of days agreed upon, without informing the company or in the company. The company took possession of the said car without my consent. I agree to any legal action\n
         \n 10. I agree that the above car will not be re-rented, pawned or given to any third party for any reason whatsoever.\n
         \n 11. A deposit of Rs.  But I know that a reasonable amount can be deducted from that amount for the damages to the vehicle due to my negligence.\n
         \n 12. If the above car gets into an accident due to my drunkenness, negligence or similar actions, or if it is destroyed by a thief, hostile kidnapping, terrorist act, I agree to pay the value of the car at the time I acquired the car and that amount will be paid to me. \n
         \n 13. I warrant that the two guarantors who have signed on my behalf for this agreement shall also be subject to the terms of this agreement and will be equally liable on my behalf and will appear on my behalf at any time.\n
         \n"
-            android:textSize="10sp" />
+            android:textSize="15sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

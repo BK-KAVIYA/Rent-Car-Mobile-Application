@@ -46,8 +46,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-50dp"
+        android:layout_height="match_parent"
         android:background="@drawable/layout_bg"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
@@ -281,7 +280,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="25dp">
+                        android:layout_marginLeft="50dp">
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"

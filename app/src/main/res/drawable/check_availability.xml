@@ -1,0 +1,23 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFCC00" /> <!-- Dark Yellow color -->
+    <corners android:radius="10dp" /> <!-- Rounded corners radius -->
+
+    <gradient
+        android:angle="270"
+        android:startColor="#FFCC00"
+        android:endColor="#FFAA00"
+        android:type="linear" />
+
+    <padding
+        android:top="8dp"
+        android:right="8dp"
+        android:bottom="8dp"
+        android:left="8dp" />
+
+    <item>
+        <shape>
+            <solid android:color="#99000000" /> <!-- Inner shadow color -->
+            <corners android:radius="10dp" /> <!-- Rounded corners radius -->
+        </shape>
+    </item>
+</shape>
