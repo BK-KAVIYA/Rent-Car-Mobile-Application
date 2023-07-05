@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.Dashboard;
+import com.example.sourthenlankacarrental.HomeFragment;
 import com.example.sourthenlankacarrental.Login;
+import com.example.sourthenlankacarrental.Payment.PaymentActivity;
 import com.example.sourthenlankacarrental.R;
 import com.example.sourthenlankacarrental.user.UserSingleton;
 
@@ -35,6 +38,7 @@ public class MyBookingFragment extends AppCompatActivity {
     private BookingManager bookingManager;
     private List<Booking> bookingList;
 
+    private Button HomeButton;
     Connection connection;
 
     @Override
@@ -43,6 +47,14 @@ public class MyBookingFragment extends AppCompatActivity {
         setContentView(R.layout.activity_mybooking);
         getSupportActionBar().hide();
 
+        HomeButton=findViewById(R.id.hmbtn);
+        HomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyBookingFragment.this, Dashboard.class);
+                startActivity(intent);
+            }
+        });
         recyclerView = findViewById(R.id.booking_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -52,7 +64,7 @@ public class MyBookingFragment extends AppCompatActivity {
             if (connection != null) {
                 String currentUserEmail = UserSingleton.getInstance().getUserEmail();
 
-                String query = "SELECT * FROM [slcrms].[dbo].[booking] WHERE customer_email = ?";
+                String query = "SELECT * FROM [slcrms].[dbo].[booking] WHERE customer_email = ? AND is_complete = 1";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, currentUserEmail);
 

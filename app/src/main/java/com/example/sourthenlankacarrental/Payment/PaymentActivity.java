@@ -82,8 +82,18 @@ public class PaymentActivity extends AppCompatActivity {
 
                         int rowsAffected = statement.executeUpdate();
                         if (rowsAffected > 0) {
-                            Intent intent = new Intent(PaymentActivity.this, MyBookingFragment.class);
-                            startActivity(intent);
+                            String query1 = "UPDATE [slcrms].[dbo].[booking] SET is_complete = 1 WHERE id=?;";
+                            PreparedStatement statement1 = null;
+                            statement1 = connection.prepareStatement(query1);
+                            statement1.setInt(1, BookingId);
+                            int rowsAffected1 = statement1.executeUpdate();
+                            if (rowsAffected1 > 0) {
+                                Intent intent = new Intent(PaymentActivity.this, MyBookingFragment.class);
+                                startActivity(intent);
+                            }else{
+                                Context context = getApplicationContext();
+                                Toast.makeText(context, "booking can't complete!", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Context context = getApplicationContext();
                             Toast.makeText(context, "Something went wrong!", Toast.LENGTH_SHORT).show();

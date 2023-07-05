@@ -28,6 +28,7 @@
         <activity
             android:name=".SettingFragment"
             android:exported="true" />
+
         <activity
             android:name=".GaurantorDetails"
             android:exported="true" />

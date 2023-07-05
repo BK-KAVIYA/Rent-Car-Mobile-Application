@@ -2,6 +2,7 @@ package com.example.sourthenlankacarrental.Messages;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,10 @@ public class MessageManager extends RecyclerView.Adapter<SentMessageHolder> {
     Context context;
     List<BaseMessage> baseMessageList;
 
+    private boolean isDateSet = false;
+
+    private String previousDate = "";
+
     public MessageManager(Context context, List<BaseMessage> baseMessageList) {
         this.context = context;
         this.baseMessageList = baseMessageList;
@@ -30,9 +35,21 @@ public class MessageManager extends RecyclerView.Adapter<SentMessageHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull SentMessageHolder holder, int position) {
-        holder.date.setText(baseMessageList.get(position).getDate());
-        holder.messageText.setText(baseMessageList.get(position).getMessage());
-        holder.timeText.setText(baseMessageList.get(position).getTime());
+
+        BaseMessage currentMessage = baseMessageList.get(position);
+
+        // Check if the date needs to be set
+        if (!isDateSet || !previousDate.equals(currentMessage.getDate())) {
+            holder.date.setVisibility(View.VISIBLE);
+            holder.date.setText(currentMessage.getDate());
+            isDateSet = true;
+            previousDate = currentMessage.getDate();
+        } else {
+            holder.date.setVisibility(View.GONE);
+        }
+
+        holder.messageText.setText(currentMessage.getMessage());
+        holder.timeText.setText(currentMessage.getTime());
 
     }
 

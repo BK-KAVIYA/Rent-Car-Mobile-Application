@@ -1,5 +1,7 @@
 package com.example.sourthenlankacarrental.Messages;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,13 +14,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.sourthenlankacarrental.BookingDetails.MyBookingFragment;
+import com.example.sourthenlankacarrental.Connection.DBConnection;
+import com.example.sourthenlankacarrental.Payment.PaymentActivity;
 import com.example.sourthenlankacarrental.R;
 
 
+import com.example.sourthenlankacarrental.user.UserHelperClass;
+import com.example.sourthenlankacarrental.user.UserSingleton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +43,14 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class MessageFragment extends Fragment {
- ImageButton SendMessage;
-    RecyclerView recyclerView;
+    Connection connection;
+
+    String email;
+    ImageButton SendMessage;
+
+    final String message_to="Admin";
+    final String user_type="customer";
+        RecyclerView recyclerView;
     MessageManager messageManageradapter;
     EditText sendMessageText;
 
@@ -46,9 +65,12 @@ public class MessageFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
 
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        databaseReference = database.getReference();
+//        database = FirebaseDatabase.getInstance();
+//        myRef = database.getReference();
+//        databaseReference = database.getReference();
+
+        DBConnection dbConnection=new DBConnection();
+        connection=dbConnection.getConnection();
 
         recyclerView = view.findViewById(R.id.nessage_send_layout);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -72,14 +94,14 @@ public class MessageFragment extends Fragment {
 
     public List<BaseMessage> sendMessage() {
         System.out.println("call------------------------------------------------");
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference messagesRef = firebaseDatabase.getReference("messages");
+//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+//        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+//
+//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        DatabaseReference messagesRef = firebaseDatabase.getReference("messages");
 
         String messageText = sendMessageText.getText().toString();
-        String senderEmail = currentUser.getEmail();
+        String senderEmail = UserSingleton.getInstance().getUserEmail();
 
         // Get current date and time
         LocalDateTime now = null;
@@ -103,62 +125,103 @@ public class MessageFragment extends Fragment {
         String time = hour + ":" + minute;
 
 
-        String messageId = messagesRef.push().getKey();
+        //String messageId = messagesRef.push().getKey();
         //List<BaseMessage> baseMessageList=new ArrayList<>();;
         baseMessageslist.add(new BaseMessage(messageText, senderEmail, date, time));
 
-        for (BaseMessage message : baseMessageslist) {
-            if (messagesRef.child(messageId).setValue(message).isSuccessful()) {
-                sendMessageText.setText("");
-            }
-        }
+        if (connection != null) {
 
+            String query = "INSERT INTO [slcrms].[dbo].[customer_message] (userEmail, message_to,message, received_time,received_date,is_replied,user_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(query);
+                statement.setString(1, senderEmail);
+                statement.setString(2, message_to);
+                statement.setString(3, messageText);
+                statement.setString(4, time);
+                statement.setString(5, date);
+                statement.setInt(6, 0);
+                statement.setString(7, user_type);
+
+                int rowsAffected = statement.executeUpdate();
+                if (rowsAffected > 0) {
+                    sendMessageText.setText("");
+                } else {
+                    Context context = getContext();
+                    Toast.makeText(context, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
 
         return baseMessageslist;
     }
 
     public void getPriviouseMessage(){
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference messagesRef = firebaseDatabase.getReference("messages");
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        String senderEmail = currentUser.getEmail();
+        email= UserSingleton.getInstance().getUserEmail();
 
+        try {
+            String query = "SELECT * FROM [slcrms].[dbo].[customer_message] WHERE userEmail = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
 
-        Query query = databaseReference.child("messages").orderByChild("senderEmail").equalTo(senderEmail);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    List<BaseMessage> baseMessageList = new ArrayList<>();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        BaseMessage baseMessage = snapshot.getValue(BaseMessage.class);
-                        baseMessageList.add(baseMessage);
-                    }
-
-                    for (BaseMessage baseMessage : baseMessageList) {
-                        System.out.println(baseMessage.getMessage()+"=====================");
-                        baseMessageslist.add(new BaseMessage(baseMessage.getMessage(),baseMessage.getSenderEmail(),baseMessage.getDate(),baseMessage.getTime()));
-                       // itemVehicle.add(new DynamicItemList(vehicle.getId(),vehicle.getTitle(), vehicleList.getDescription(), vehicleList.getRating(), vehicle.getImage()));
-                    }
-                    messageManageradapter=new MessageManager(getContext(),baseMessageslist);
-                    recyclerView.setAdapter(messageManageradapter);
-                    //messageManageradapter.notifyDataSetChanged();
-                }
-                // Use the vehicle object here
-                else {
-                    // Handle case when data doesn't exist
-                }
-
+            ResultSet resultSet = statement.executeQuery();
+            baseMessageslist.clear();
+            while(resultSet.next()){
+                baseMessageslist.add(new BaseMessage(resultSet.getString(4),resultSet.getString(2),resultSet.getString(6),resultSet.getString(5)));
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            messageManageradapter=new MessageManager(getContext(),baseMessageslist);
+            recyclerView.setAdapter(messageManageradapter);
 
-            }
-            });
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+//Firebase Connection
+//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        DatabaseReference messagesRef = firebaseDatabase.getReference("messages");
+//
+//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+//        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+//        String senderEmail = currentUser.getEmail();
+//
+//
+//        Query query = databaseReference.child("messages").orderByChild("senderEmail").equalTo(senderEmail);
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//
+//                    List<BaseMessage> baseMessageList = new ArrayList<>();
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        BaseMessage baseMessage = snapshot.getValue(BaseMessage.class);
+//                        baseMessageList.add(baseMessage);
+//                    }
+//
+//                    for (BaseMessage baseMessage : baseMessageList) {
+//                        System.out.println(baseMessage.getMessage()+"=====================");
+//                        baseMessageslist.add(new BaseMessage(baseMessage.getMessage(),baseMessage.getSenderEmail(),baseMessage.getDate(),baseMessage.getTime()));
+//                       // itemVehicle.add(new DynamicItemList(vehicle.getId(),vehicle.getTitle(), vehicleList.getDescription(), vehicleList.getRating(), vehicle.getImage()));
+//                    }
+//                    messageManageradapter=new MessageManager(getContext(),baseMessageslist);
+//                    recyclerView.setAdapter(messageManageradapter);
+//                    //messageManageradapter.notifyDataSetChanged();
+//                }
+//                // Use the vehicle object here
+//                else {
+//                    // Handle case when data doesn't exist
+//                }
+//
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//            });
       //  return list;
     }
 
