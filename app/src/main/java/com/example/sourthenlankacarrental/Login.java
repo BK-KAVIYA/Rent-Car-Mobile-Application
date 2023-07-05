@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.user.UserSingleton;
@@ -117,12 +119,16 @@ public class Login extends AppCompatActivity {
 
                     // Do something with the retrieved data
                 }else{
-                    System.out.println("password incorrect");
+                    Context context = getApplicationContext();
+                    Toast.makeText(context, "password or email incorrect!", Toast.LENGTH_SHORT).show();
                 }
 
                 resultSet.close();
                 statement.close();
                 connection.close();
+            }else{
+                Context context = getApplicationContext();
+                Toast.makeText(context, "check your connection!", Toast.LENGTH_SHORT).show();
             }
         } catch (SQLException e) {
             e.printStackTrace();
