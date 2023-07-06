@@ -1,12 +1,15 @@
 package com.example.sourthenlankacarrental.Messages;
 
 import com.example.sourthenlankacarrental.user.UserHelperClass;
+import com.example.sourthenlankacarrental.user.UserSingleton;
 
 public class BaseMessage {
     private String message;
     private String senderEmail;
     private String date;
     private String time;
+
+    boolean sent;
 
     public BaseMessage() {
     }
@@ -18,6 +21,15 @@ public class BaseMessage {
         this.time = time;
     }
 
+    public boolean isSent(){
+
+        if(senderEmail.equals(UserSingleton.getInstance().getUserEmail())){
+            sent= true;
+        }else{
+            sent= false;
+        }
+        return sent;
+    }
     public String getMessage() {
         return message;
     }

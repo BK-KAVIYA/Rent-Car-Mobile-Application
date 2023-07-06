@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sourthenlankacarrental.R;
 import com.example.sourthenlankacarrental.Util.DateUtils;
 
-public class SentMessageHolder extends RecyclerView.ViewHolder {
+public class SentMessageHolder extends BaseMessageViewHolder {
     TextView messageText, timeText,date;
 
     SentMessageHolder(View itemView) {
@@ -16,12 +16,14 @@ public class SentMessageHolder extends RecyclerView.ViewHolder {
 
         messageText = (TextView) itemView.findViewById(R.id.text_gchat_message_me);
         timeText = (TextView) itemView.findViewById(R.id.text_gchat_timestamp_me);
-        date = (TextView) itemView.findViewById(R.id.text_gchat_date_me);
+        date = (TextView) itemView.findViewById(R.id.dateTextView);
 
     }
 
-    void bind(BaseMessage message) {
+    public void bind(BaseMessage message) {
         messageText.setText(message.getMessage());
+        timeText.setText(message.getTime());
+        date.setText(message.getDate());
 
         // Format the stored timestamp into a readable String using method.
        // timeText.setText(DateUtils.formatDateTime(message.getCreatedAt()));

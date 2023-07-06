@@ -169,10 +169,11 @@ public class CheckAvailability extends AppCompatActivity {
 
                     try {
                         if(!sdate.isEmpty()) {
-                            String query = "SELECT * FROM [slcrms].[dbo].[vehicle] WHERE id NOT IN (SELECT vehicle_id FROM [slcrms].[dbo].[booking] WHERE ? BETWEEN from_date AND to_date);";
+                            String query = "SELECT * FROM [slcrms].[dbo].[vehicle] WHERE id NOT IN (SELECT vehicle_id FROM [slcrms].[dbo].[booking] WHERE ? BETWEEN from_date AND to_date OR ? BETWEEN from_date AND to_date)";
                             PreparedStatement statement = null;
                             statement = connection.prepareStatement(query);
                             statement.setString(1, sdate);
+                            statement.setString(2, edate);
                             ResultSet resultSet = statement.executeQuery();
                             itemVehicle.clear();
                             while (resultSet.next()) {

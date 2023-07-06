@@ -7,7 +7,7 @@
     android:layout_marginTop="2dp">
 
     <TextView
-        android:id="@+id/text_gchat_date_me"
+        android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -31,7 +31,7 @@
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_gchat_date_me">
+        app:layout_constraintTop_toBottomOf="@id/dateTextView">
 
         <LinearLayout
             android:id="@+id/layout_gchat_container_me"

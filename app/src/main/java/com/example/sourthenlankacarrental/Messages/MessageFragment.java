@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,9 +84,15 @@ public class MessageFragment extends Fragment {
         SendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                messageManageradapter=new MessageManager(getContext(),sendMessage());
-                recyclerView.setAdapter(messageManageradapter);
-                sendMessageText.setText("");
+                if (!TextUtils.isEmpty(sendMessageText.getText())){
+                    messageManageradapter=new MessageManager(getContext(),sendMessage());
+                    recyclerView.setAdapter(messageManageradapter);
+                    sendMessageText.setText("");
+                }else{
+                    Context context = getContext();
+                    Toast.makeText(context, "Enter your Message first!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -93,12 +100,6 @@ public class MessageFragment extends Fragment {
     }
 
     public List<BaseMessage> sendMessage() {
-        System.out.println("call------------------------------------------------");
-//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-//        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-//
-//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        DatabaseReference messagesRef = firebaseDatabase.getReference("messages");
 
         String messageText = sendMessageText.getText().toString();
         String senderEmail = UserSingleton.getInstance().getUserEmail();
@@ -165,7 +166,7 @@ public class MessageFragment extends Fragment {
         email= UserSingleton.getInstance().getUserEmail();
 
         try {
-            String query = "SELECT * FROM [slcrms].[dbo].[customer_message] WHERE userEmail = ?";
+            String query = "SELECT * FROM [slcrms].[dbo].[customer_message] WHERE userEmail IN (?,'Admin')";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, email);
 
