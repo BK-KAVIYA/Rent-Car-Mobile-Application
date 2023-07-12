@@ -11,12 +11,13 @@ import com.example.sourthenlankacarrental.R;
 
 public class NotificationViewHolder extends RecyclerView.ViewHolder {
     ImageView imageView;
-    TextView title,message,date;
+    TextView title,message,time,date;
     public NotificationViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView=itemView.findViewById(R.id.imageViewIcon);
         title=itemView.findViewById(R.id.textViewTitle);
         message=itemView.findViewById(R.id.textViewMessage);
-        date=itemView.findViewById(R.id.notificationDate);
+        time=itemView.findViewById(R.id.notificationDate);
+        date=itemView.findViewById(R.id.textViewDate);
     }
 }

@@ -3,22 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/white"
     tools:context=".HomeFragment">
+    <TextView
+        android:fontFamily="@font/bangers"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/notificationtxt"
+        android:text="Notification Center
+"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notif_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/notificationtxt"
         android:padding="8dp"
         android:scrollbars="vertical"
         android:background="@color/white"
         android:clipToPadding="true"
         android:layout_marginBottom="8dp"/>
-
-
-
-
-
 
 </RelativeLayout>

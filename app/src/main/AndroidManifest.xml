@@ -5,20 +5,22 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:largeHeap="true"
-        android:requestLegacyExternalStorage="true"
-        android:preserveLegacyExternalStorage="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".Invoice.Invoice"
+            android:exported="false" />
         <activity
             android:name=".Booking_details"
             android:exported="true" />
@@ -28,7 +30,6 @@
         <activity
             android:name=".SettingFragment"
             android:exported="true" />
-
         <activity
             android:name=".GaurantorDetails"
             android:exported="true" />
@@ -38,10 +39,12 @@
         <activity
             android:name=".Messages.Message"
             android:exported="false" />
-        <activity android:name=".vehicale.VehicleDetails"
-            android:exported="true"/>
-        <activity android:name=".BookingDetails.CheckAvailability"
-            android:exported="true"/>
+        <activity
+            android:name=".vehicale.VehicleDetails"
+            android:exported="true" />
+        <activity
+            android:name=".BookingDetails.CheckAvailability"
+            android:exported="true" />
         <activity android:name=".SingUp" />
         <activity android:name=".Login" />
         <activity android:name=".Dashboard" />

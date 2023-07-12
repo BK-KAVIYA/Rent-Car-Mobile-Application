@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Invoice.Invoice">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/printlayout"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="INVOICE"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:background="@color/colorPrimary"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+        <!-- Invoice Number -->
+        <TextView
+            android:id="@+id/textViewInvoiceNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Invoice Number: #12345"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_below="@id/textViewTitle"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+        <!-- Company Logo -->
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="150dp"
+            android:layout_height="90dp"
+            android:src="@drawable/sorthen_lanka_logo"
+            android:scaleType="centerCrop"
+            android:layout_below="@id/textViewInvoiceNumber"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addressSection"
+            android:background="@drawable/box_background"
+            android:layout_below="@+id/imageViewLogo"
+            android:orientation="horizontal"
+            android:gravity="top">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="2dp"
+                android:padding="2dp">
+                <!-- Customer Name -->
+                <TextView
+                    android:id="@+id/textViewCustomerName"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="Name: Baladurage Kavinda"
+                    android:textSize="16sp"
+                    android:layout_below="@id/textViewDate"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <!-- Customer Address -->
+                <TextView
+                    android:id="@+id/textViewCustomerAddress"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="Dadalla Gewatta, Thalalla-North, Kekanadura, Matara"
+                    android:textSize="16sp"
+                    android:layout_below="@id/textViewCustomerName"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="0dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="15dp"
+                android:orientation="vertical">
+
+                <!-- Date -->
+                <TextView
+                    android:id="@+id/textViewDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date: July 11, 2023"
+                    android:textSize="16sp"
+                    android:layout_below="@id/textViewInvoiceNumber"
+                    android:layout_toEndOf="@id/imageViewLogo"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="5dp" />
+
+                <!-- Company Address -->
+                <TextView
+                    android:id="@+id/textViewCompanyAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Matara Southern Lanka rent a car and tour (PVT) LTD  "
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_below="@id/imageViewLogo"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="0dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+        <!-- Booking Vehicle List - Table Layout -->
+        <TableLayout
+            android:id="@+id/tableLayoutBookingList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addressSection"
+            android:layout_marginTop="16dp">
+
+            <!-- Table Headers -->
+            <TableRow>
+                <TextView
+                    android:id="@+id/textViewHeadervehicle"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Vehicle Details"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/table_header_background" />
+                <TextView
+                    android:id="@+id/textViewHeaderFrom"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="From Date"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/table_header_background" />
+
+                <TextView
+                    android:id="@+id/textViewHeaderTo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="To Date"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/table_header_background" />
+
+                <TextView
+                    android:id="@+id/textViewHeaderPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/table_header_background" />
+            </TableRow>
+
+            <!-- Table Rows -->
+            <TableRow>
+                <TextView
+                    android:id="@+id/textViewVehicle"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="Range Rover Super Fast"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/table_row_background" />
+                <TextView
+                    android:id="@+id/textViewFrom1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="01/07/2023"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/table_row_background" />
+
+                <TextView
+                    android:id="@+id/textViewTo1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="05/07/2023"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/table_row_background" />
+
+                <TextView
+                    android:id="@+id/textViewPrice1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="$200.00"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:padding="8dp"
+                    android:background="@drawable/table_row_background" />
+            </TableRow>
+
+            <!-- Add more rows as needed -->
+
+        </TableLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary" />
+        <!-- Total -->
+        <TextView
+            android:id="@+id/textViewTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total: $110.00"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_below="@id/tableLayoutBookingList"
+            android:layout_marginStart="16dp"
+            android:gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="16dp" />
+
+
+        <!-- Company Hotline Number -->
+        <TextView
+            android:id="@+id/textViewContactDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact US"
+            android:textSize="16sp"
+            android:layout_marginStart="16dp"
+            android:textStyle="bold"
+            android:layout_below="@id/textViewTermstxt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/textViewHotline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hotline: 123-456-7890"
+            android:textSize="12sp"
+            android:layout_marginStart="16dp"
+            android:layout_below="@id/textViewContactDetails"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp" />
+
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewHotline"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:text="Matara Southern Lanka rent a car and tour (PVT) LTD \nNupe, Matara. "
+            android:textSize="12sp" />
+
+        <!-- Terms and Conditions -->
+        <TextView
+            android:id="@+id/textViewTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Terms and Conditions :"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_below="@id/textViewTotal"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/textViewTermstxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Any disputes or disagreements arising from the invoice or related payment shall be resolved through arbitration in accordance with the rules and procedures of the Arbitration Act of Sri Lanka. "
+            android:textSize="12sp"
+            android:layout_below="@id/textViewTerms"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_centerHorizontal="true" />
+
+        <!-- Thank You Text -->
+        <TextView
+            android:id="@+id/textViewThankYou"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@color/design_default_color_primary"
+            android:text="Thank you for your business!"
+            android:textSize="16sp"
+            android:layout_below="@id/textViewAddress"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+    <!-- Print Button -->
+    <Button
+        android:id="@+id/buttonHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Booking"
+        android:layout_below="@+id/printlayout"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#FF4081" />
+
+        <Button
+            android:id="@+id/buttonPrint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Print"
+            android:layout_below="@+id/buttonHome"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary" />
+
+
+
+
+
+
+</RelativeLayout>

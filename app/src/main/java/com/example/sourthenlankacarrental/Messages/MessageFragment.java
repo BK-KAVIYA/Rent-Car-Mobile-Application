@@ -51,7 +51,7 @@ public class MessageFragment extends Fragment {
 
     final String message_to="Admin";
     final String user_type="customer";
-        RecyclerView recyclerView;
+    RecyclerView recyclerView;
     MessageManager messageManageradapter;
     EditText sendMessageText;
 

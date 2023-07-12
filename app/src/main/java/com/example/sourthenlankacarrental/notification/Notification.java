@@ -3,14 +3,16 @@ package com.example.sourthenlankacarrental.notification;
 public class Notification {
     private String title;
     private String message;
-    private int image;
-    private double date;
+    private String image;
+    private String time;
+    private String date;
 
-    public Notification(String title, String message, int image, double date) {
+    public Notification(String title, String message, String image, String time, String date) {
         this.title = title;
         this.message = message;
         this.image = image;
-        this.date = date;
+        this.time = time;
+        this.date=date;
     }
 
     public String getTitle() {
@@ -29,19 +31,27 @@ public class Notification {
         this.message = message;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public double getDate() {
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(float date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

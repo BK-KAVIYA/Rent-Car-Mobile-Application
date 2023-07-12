@@ -15,6 +15,16 @@
         android:layout_centerVertical="true" />
 
     <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="8dp"
+        android:text="2023-07-05"
+        android:textSize="14sp" />
+
+    <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

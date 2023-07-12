@@ -1,7 +1,13 @@
 package com.example.sourthenlankacarrental.Payment;
 
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +16,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.sourthenlankacarrental.BookingDetails.MyBookingFragment;
 import com.example.sourthenlankacarrental.Booking_details;
@@ -18,6 +27,8 @@ import com.example.sourthenlankacarrental.Dashboard;
 import com.example.sourthenlankacarrental.GaurantorDetails;
 import com.example.sourthenlankacarrental.Login;
 import com.example.sourthenlankacarrental.R;
+import com.example.sourthenlankacarrental.notification.NotificationFragment;
+import com.example.sourthenlankacarrental.notification.NotificationGenarator;
 import com.example.sourthenlankacarrental.user.UserSingleton;
 
 import java.sql.Connection;
@@ -41,6 +52,13 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pyament_getway_layout);
         getSupportActionBar().hide();
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
+            if(ContextCompat.checkSelfPermission(PaymentActivity.this, Manifest.permission.POST_NOTIFICATIONS)!= PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(PaymentActivity.this,new String[]{Manifest.permission.POST_NOTIFICATIONS},101);
+            }
+        }
+      //  showNotification("Payment Confirmation","Payment has been successfully processed");
 
         Intent intent=getIntent();
         if (intent != null) {
@@ -88,8 +106,13 @@ public class PaymentActivity extends AppCompatActivity {
                             statement1.setInt(1, BookingId);
                             int rowsAffected1 = statement1.executeUpdate();
                             if (rowsAffected1 > 0) {
-                                Intent intent = new Intent(PaymentActivity.this, MyBookingFragment.class);
-                                startActivity(intent);
+
+                                  showNotification("Payment Confirmation","Payment Confirmation");
+                                  NotificationGenarator notificationGenarator=new NotificationGenarator("Payment Confirmation","Payment Confirmation");
+                                  notificationGenarator.addNotification();
+
+                                  Intent intent = new Intent(PaymentActivity.this, MyBookingFragment.class);
+                                  startActivity(intent);
                             }else{
                                 Context context = getApplicationContext();
                                 Toast.makeText(context, "booking can't complete!", Toast.LENGTH_SHORT).show();
@@ -105,6 +128,37 @@ public class PaymentActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+    public void showNotification(String title,String context){
+        NotificationCompat.Builder builder=new NotificationCompat.Builder(getApplicationContext(),"My Notification");
+        builder.setContentTitle(title);
+        builder.setContentText(context);
+        builder.setSmallIcon(R.drawable.notification_icon);
+        builder.setAutoCancel(true);
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        Intent intent=new Intent(getApplicationContext(),NotificationFragment.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        PendingIntent pendingIntent=PendingIntent.getActivity(getApplicationContext(), 0,intent,PendingIntent.FLAG_MUTABLE);
+        builder.setContentIntent(pendingIntent);
+
+        //Context context = getContext();
+
+        android.app.NotificationManager notificationManager = (android.app.NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if(android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel=notificationManager.getNotificationChannel("My Notification");
+            if(notificationChannel==null){
+                NotificationChannel channel=new NotificationChannel("My Notification","My Notification", android.app.NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setLightColor(Color.GREEN);
+                channel.enableVibration(true);
+                notificationManager.createNotificationChannel(channel);
+            }
+
+        }
+        notificationManager.notify(0,builder.build());
+
 
     }
 }
