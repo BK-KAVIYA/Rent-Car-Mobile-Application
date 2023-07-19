@@ -91,9 +91,8 @@ public class HomeFragment extends Fragment{
                     vehicle.setId(resultSet.getInt(1));
                     vehicle.setTitle(resultSet.getString(2));
                     vehicle.setRating(resultSet.getInt(4));
-                    vehicle.setDescription("Test description");
-
-                    vehicle.setImage("https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-4.jpeg?isig=0&q=75");
+                    vehicle.setDescription(resultSet.getString(6));
+                    vehicle.setImage(resultSet.getString(5));
 
                     itemVehicle.add(new DynamicItemList(vehicle.getId(),vehicle.getTitle(), vehicle.getDescription(), vehicle.getRating(), vehicle.getImage()));
 

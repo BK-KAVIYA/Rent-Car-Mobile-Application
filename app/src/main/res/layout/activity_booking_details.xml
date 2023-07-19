@@ -298,6 +298,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Start Date"
+                    android:enabled="false"
                     android:id="@+id/startdate"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -328,6 +329,7 @@
                     android:layout_height="wrap_content"
                     android:hint="End Date"
                     android:id="@+id/end_date"
+                    android:enabled="false"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText

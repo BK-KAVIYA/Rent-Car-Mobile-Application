@@ -37,6 +37,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.sourthenlankacarrental.BookingDetails.Booking;
+import com.example.sourthenlankacarrental.BookingDetails.BookingDateSingleton;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.user.UserHelperClass;
 import com.example.sourthenlankacarrental.user.UserSingleton;
@@ -151,13 +152,13 @@ private final int GALLERY_REQ_CODE=1000;
         driverStatusCheckbox = findViewById(R.id.driver_status);
         int driverStatus = driverStatusCheckbox.isChecked() ? 1 : 0;
 
+
+
+        BookingDateSingleton bookingDate = BookingDateSingleton.getInstance();
+        start_date_txt.setText(bookingDate.getFromDate());
+        end_date_txt.setText(bookingDate.getToDate());
+
         onLoad(vehicleId);
-
-
-
-
-
-
 
         Calendar calendar=Calendar.getInstance();
         final int year=calendar.get(Calendar.YEAR);
@@ -609,19 +610,10 @@ private final int GALLERY_REQ_CODE=1000;
 
                 while (resultSet.next()) {
                     Vehicle vehicle =new Vehicle();
-                    String storage="H:\\img\\rangerover.png";
-                    vehicle.setImage(storage);
                     vehicle.setTitle(resultSet.getString(2));
 
                     if (vehicle.getImage() != null) {
-                       // int resourceId = imageViewVehicle.getContext().getResources().getIdentifier(vehicle.getImage(), "drawable", imageViewVehicle.getContext().getPackageName());
-//                        Glide.with(imageViewVehicle.getContext())
-//                                .load(vehicle.getImage())
-//                                .into(imageViewVehicle);
-
-                        String url = "https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-4.jpeg?isig=0&q=75";
-
-                        Glide.with(imageViewVehicle.getContext()).load(Uri.parse(url))
+                        Glide.with(imageViewVehicle.getContext()).load(Uri.parse(vehicle.getImage()))
                                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                                 .error(R.drawable.avatar1)
                                 .listener(new RequestListener<Drawable>() {
@@ -629,7 +621,6 @@ private final int GALLERY_REQ_CODE=1000;
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                         return false;
                                     }
-
                                     @Override
                                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                                         return false;

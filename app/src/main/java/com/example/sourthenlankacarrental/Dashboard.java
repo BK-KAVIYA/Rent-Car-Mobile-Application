@@ -66,7 +66,7 @@ public class Dashboard extends AppCompatActivity {
             badgeDrawable.setVisible(true);
             badgeDrawable.setNumber(4);
         }catch (Exception e){
-            System.out.println("=================================================="+e);
+            System.out.println("Exception Occur :"+e.getMessage());
         }
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

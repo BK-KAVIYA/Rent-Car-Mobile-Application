@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ctr_bg"
-    tools:context=".VehicleDetails">
+    tools:context=".vehicale.VehicleDetailsShow">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -350,23 +350,14 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
-                        android:layout_width="170dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/price"
-                        android:text="Rs 12000/= \nper day"
+                        android:text="Rs 12000/= per day"
                         android:layout_marginLeft="5dp"
                         android:fontFamily="@font/bangers"
                         android:textSize="30sp"/>
-                    <Button
-                        android:layout_marginTop="10dp"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="Book Now"
-                        android:background="#000"
-                        android:textColor="#fff"
-                        android:id="@+id/bk_det_btn"
-                        android:transitionName="button_tran"/>
+
                 </LinearLayout>
 
             </LinearLayout>

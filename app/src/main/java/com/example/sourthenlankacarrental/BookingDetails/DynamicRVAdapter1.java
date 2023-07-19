@@ -1,4 +1,4 @@
-package com.example.sourthenlankacarrental;
+package com.example.sourthenlankacarrental.BookingDetails;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,33 +13,33 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.example.sourthenlankacarrental.Booking_details;
+import com.example.sourthenlankacarrental.DynamicItemList;
+import com.example.sourthenlankacarrental.DynamicRVAdapter;
+import com.example.sourthenlankacarrental.R;
 import com.example.sourthenlankacarrental.vehicale.VehicleDetails;
 import com.example.sourthenlankacarrental.vehicale.VehicleDetailsShow;
-
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.io.File;
 import java.util.ArrayList;
-
-public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.ViewHolder> {
+public class DynamicRVAdapter1 extends RecyclerView.Adapter<DynamicRVAdapter1.ViewHolder> {
     ArrayList<DynamicItemList> dynamicRVModels;
     Booking_details booking_details;
 
-    public DynamicRVAdapter(ArrayList<DynamicItemList> dynamicRVModels) {
+    public DynamicRVAdapter1(ArrayList<DynamicItemList> dynamicRVModels) {
         this.dynamicRVModels = dynamicRVModels;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DynamicRVAdapter1.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate= LayoutInflater.from(parent.getContext()).inflate(R.layout.dynamic_rv_item_layout,parent,false);
-        return new ViewHolder(inflate);
+        return new DynamicRVAdapter1.ViewHolder(inflate);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull DynamicRVAdapter1.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.carName.setText(dynamicRVModels.get(position).getTitle());
         holder.carDetails.setText(dynamicRVModels.get(position).getDescription());
@@ -65,7 +65,7 @@ public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.Vie
                 // Handle item click here
                 // Start the new activity
                 Context context = view.getContext();
-                Intent intent = new Intent(context, VehicleDetailsShow.class);
+                Intent intent = new Intent(context, VehicleDetails.class);
                 // Pass any extra data to the new activity if needed
                 intent.putExtra("vid", vId);
                 context.startActivity(intent);

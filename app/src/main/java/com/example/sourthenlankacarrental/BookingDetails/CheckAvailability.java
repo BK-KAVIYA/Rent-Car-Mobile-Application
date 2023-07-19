@@ -44,7 +44,7 @@ public class CheckAvailability extends AppCompatActivity {
 
     ArrayList<DynamicItemList> itemVehicle=new ArrayList();
 
-    DynamicRVAdapter dynamicRVAdapter;
+    DynamicRVAdapter1 dynamicRVAdapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,12 +156,18 @@ public class CheckAvailability extends AppCompatActivity {
 
         RecyclerView drv = findViewById(R.id.av_rv_1);
         drv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        dynamicRVAdapter = new DynamicRVAdapter(itemVehicle);
+        dynamicRVAdapter = new DynamicRVAdapter1(itemVehicle);
         drv.setAdapter(dynamicRVAdapter);
 
         checkAvailability.setOnClickListener(new View.OnClickListener() {
+            // Get the singleton instance
+
+
             @Override
             public void onClick(View v) {
+                BookingDateSingleton bookingDate = BookingDateSingleton.getInstance();
+                bookingDate.setFromDate(sdate);
+                bookingDate.setToDate(edate);
                 DBConnection dbConnection=new DBConnection();
                 connection=dbConnection.getConnection();
 
@@ -181,9 +187,8 @@ public class CheckAvailability extends AppCompatActivity {
                                 vehicle.setId(resultSet.getInt(1));
                                 vehicle.setTitle(resultSet.getString(2));
                                 vehicle.setRating(resultSet.getInt(4));
-                                vehicle.setDescription("Test description");
-
-                                vehicle.setImage("https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-4.jpeg?isig=0&q=75");
+                                vehicle.setDescription(resultSet.getString(6));
+                                vehicle.setImage(resultSet.getString(5));
 
                                 itemVehicle.add(new DynamicItemList(vehicle.getId(), vehicle.getTitle(), vehicle.getDescription(), vehicle.getRating(), vehicle.getImage()));
 

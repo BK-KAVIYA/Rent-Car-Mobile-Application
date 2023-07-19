@@ -22,12 +22,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class VehicleDetails extends AppCompatActivity {
+public class VehicleDetailsShow extends AppCompatActivity{
     private TextView power, speed, average_fule, passanger, doors, aircondition, gear, gas, price;
 
     ImageView vehicleSpec;
 
-    Button button;
 
     Connection connection;
 
@@ -38,7 +37,7 @@ public class VehicleDetails extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vehicle_details);
+        setContentView(R.layout.activity_vehicle_details_show);
         getSupportActionBar().hide();
         Intent intent = getIntent();
         if (intent != null) {
@@ -56,19 +55,8 @@ public class VehicleDetails extends AppCompatActivity {
         gear = findViewById(R.id.gear);
         gas = findViewById(R.id.gas);
         price = findViewById(R.id.price);
-        button = findViewById(R.id.bk_det_btn);
         vehicleSpec=findViewById(R.id.clospImageView);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, Booking_details.class);
-                // Pass any extra data to the new activity if needed
-                intent.putExtra("vid", vehicleId);
-                context.startActivity(intent);
-            }
-        });
 
         DBConnection dbConnection = new DBConnection();
         connection = dbConnection.getConnection();
@@ -145,4 +133,5 @@ public class VehicleDetails extends AppCompatActivity {
 
         }
     }
+
 }
