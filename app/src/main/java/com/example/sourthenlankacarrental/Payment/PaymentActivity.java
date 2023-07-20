@@ -20,11 +20,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.sourthenlankacarrental.BookingDetails.BookingSingleton;
 import com.example.sourthenlankacarrental.BookingDetails.MyBookingFragment;
 import com.example.sourthenlankacarrental.Booking_details;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.Dashboard;
 import com.example.sourthenlankacarrental.GaurantorDetails;
+import com.example.sourthenlankacarrental.Invoice.Invoice;
 import com.example.sourthenlankacarrental.Login;
 import com.example.sourthenlankacarrental.R;
 import com.example.sourthenlankacarrental.notification.NotificationFragment;
@@ -65,6 +67,8 @@ public class PaymentActivity extends AppCompatActivity {
             // Retrieve the saved values from the bundle
             BookingId = getIntent().getIntExtra("BID",10);
             price = getIntent().getDoubleExtra("Price",1000);
+            BookingSingleton bookingDetails = BookingSingleton.getInstance();
+            bookingDetails.setAmount(String.valueOf(price));
         }
 
         pay_button=findViewById(R.id.pay_button);
@@ -78,7 +82,7 @@ public class PaymentActivity extends AppCompatActivity {
         LocalDate currentDate = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             currentDate = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = currentDate.format(formatter);
             System.out.println("Date----------"+formattedDate);
             Booking_date=formattedDate;
@@ -107,11 +111,11 @@ public class PaymentActivity extends AppCompatActivity {
                             int rowsAffected1 = statement1.executeUpdate();
                             if (rowsAffected1 > 0) {
 
-                                  showNotification("Payment Confirmation","Payment Confirmation");
-                                  NotificationGenarator notificationGenarator=new NotificationGenarator("Payment Confirmation","Payment Confirmation");
+                                  showNotification("Payment Confirmation","Your Payment is successfully!");
+                                  NotificationGenarator notificationGenarator=new NotificationGenarator("Payment Confirmation","Your Payment is successfully!");
                                   notificationGenarator.addNotification();
 
-                                  Intent intent = new Intent(PaymentActivity.this, MyBookingFragment.class);
+                                  Intent intent = new Intent(PaymentActivity.this, Invoice.class);
                                   startActivity(intent);
                             }else{
                                 Context context = getApplicationContext();

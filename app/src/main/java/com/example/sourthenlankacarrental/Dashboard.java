@@ -9,12 +9,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.Messages.MessageFragment;
 import com.example.sourthenlankacarrental.notification.NotificationFragment;
+import com.example.sourthenlankacarrental.user.UserSingleton;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Dashboard extends AppCompatActivity {
 
@@ -23,11 +29,11 @@ public class Dashboard extends AppCompatActivity {
     SettingFragment settingFragment=new SettingFragment();
     NotificationFragment notificationFragment=new NotificationFragment();
     MessageFragment messageFragment=new MessageFragment();
-
     ImageView LogoutButton,Avatar;
 
+    Connection connection;
 
-
+    String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -38,6 +44,8 @@ public class Dashboard extends AppCompatActivity {
 
 
         Avatar=findViewById(R.id.dash_avtr);
+
+        email= UserSingleton.getInstance().getUserEmail();
         Avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +72,22 @@ public class Dashboard extends AppCompatActivity {
         try {
             BadgeDrawable badgeDrawable=bottomNavigationView.getOrCreateBadge(R.id.notification);
             badgeDrawable.setVisible(true);
-            badgeDrawable.setNumber(4);
+            DBConnection dbConnection=new DBConnection();
+            connection=dbConnection.getConnection();
+            if (connection != null) {
+
+
+                String query = "select count(id) AS row_count  FROM [slcrms].[dbo].[customer_notification] WHERE user_email=?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, email);
+
+                ResultSet resultSet = statement.executeQuery();
+                int rowCount=0;
+                if (resultSet.next()) {
+                    rowCount=resultSet.getInt("row_count");
+                }
+                badgeDrawable.setNumber(rowCount);
+            }
         }catch (Exception e){
             System.out.println("Exception Occur :"+e.getMessage());
         }

@@ -1,26 +1,17 @@
 package com.example.sourthenlankacarrental;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,30 +28,16 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.sourthenlankacarrental.BookingDetails.Booking;
-import com.example.sourthenlankacarrental.BookingDetails.BookingDateSingleton;
+import com.example.sourthenlankacarrental.BookingDetails.BookingSingleton;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.user.UserHelperClass;
 import com.example.sourthenlankacarrental.user.UserSingleton;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,11 +45,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Booking_details extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -111,6 +84,7 @@ public class Booking_details extends AppCompatActivity implements AdapterView.On
 
     DatePickerDialog.OnDateSetListener dateSetListener;
 
+    BookingSingleton bookingDetails = BookingSingleton.getInstance();
     String[] gender={"Select Gender","Male","Female"};
     String[] district={"Select District","Colombo","Gampaha","Kalutara","Kandy","Matale","Nuwara Eliya","Galle","Matara","Hambantota","Jaffna","Kilinochchi","Mannar","Vavuniya","Mullaitivu","Batticaloa","Ampara","Trincomalee","Kurunegala","Puttalam","Anuradhapura","Polonnaruwa","Badulla","Moneragala","Ratnapura","Kegalle"};
 
@@ -154,9 +128,11 @@ private final int GALLERY_REQ_CODE=1000;
 
 
 
-        BookingDateSingleton bookingDate = BookingDateSingleton.getInstance();
-        start_date_txt.setText(bookingDate.getFromDate());
-        end_date_txt.setText(bookingDate.getToDate());
+
+        start_date_txt.setText(bookingDetails.getFromDate());
+        end_date_txt.setText(bookingDetails.getToDate());
+        booking.setStartDate(bookingDetails.getFromDate());
+        booking.setEndDate(bookingDetails.getToDate());
 
         onLoad(vehicleId);
 
@@ -266,8 +242,7 @@ private final int GALLERY_REQ_CODE=1000;
                 String nic = nic_txt.getText().toString().trim();
                 String age = age_txt.getText().toString().trim();
 
-                // Define the date format
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-dd-M");
 
                 // Parse the from date and to date strings into LocalDate objects
                 String fromDateStr = booking.getStartDate();
@@ -276,7 +251,7 @@ private final int GALLERY_REQ_CODE=1000;
                 LocalDate toDate = LocalDate.parse(toDateStr, dateFormatter);
 
                 // Calculate the difference in days
-                differenceInDays = ChronoUnit.DAYS.between(fromDate, toDate);
+                long differenceInDays = ChronoUnit.DAYS.between(fromDate, toDate);
 
                 System.out.println("Difference in days: " + differenceInDays);
 
@@ -611,8 +586,9 @@ private final int GALLERY_REQ_CODE=1000;
                 while (resultSet.next()) {
                     Vehicle vehicle =new Vehicle();
                     vehicle.setTitle(resultSet.getString(2));
+                    vehicle.setImage(resultSet.getString(5));
 
-                    if (vehicle.getImage() != null) {
+                    if (resultSet.getString(2) != null) {
                         Glide.with(imageViewVehicle.getContext()).load(Uri.parse(vehicle.getImage()))
                                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                                 .error(R.drawable.avatar1)
@@ -652,6 +628,8 @@ private final int GALLERY_REQ_CODE=1000;
                     userHelperClass.setPhonenNumber(resultSet.getString(5));
                     userHelperClass.setPassword(resultSet.getString(9));
 
+                    bookingDetails.setCustomerName(resultSet.getString(2));
+                    bookingDetails.setCustomerAddress(resultSet.getString(6));
 
                     name_txt.setText(userHelperClass.getRegName());
                     nic_txt.setText(userHelperClass.getIdNumber());

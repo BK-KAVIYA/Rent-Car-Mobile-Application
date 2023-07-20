@@ -12,10 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sourthenlankacarrental.Booking_details;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.DynamicItemList;
-import com.example.sourthenlankacarrental.DynamicRVAdapter;
 import com.example.sourthenlankacarrental.R;
 import com.example.sourthenlankacarrental.Vehicle;
 import com.google.android.material.textfield.TextInputEditText;
@@ -165,7 +163,7 @@ public class CheckAvailability extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                BookingDateSingleton bookingDate = BookingDateSingleton.getInstance();
+                BookingSingleton bookingDate = BookingSingleton.getInstance();
                 bookingDate.setFromDate(sdate);
                 bookingDate.setToDate(edate);
                 DBConnection dbConnection=new DBConnection();

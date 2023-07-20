@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.sourthenlankacarrental.BookingDetails.BookingSingleton;
 import com.example.sourthenlankacarrental.Booking_details;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.R;
@@ -129,6 +130,9 @@ public class VehicleDetails extends AppCompatActivity {
 
                     if (resultSet1.next()) {
                         collapsingToolbarLayout.setTitle(resultSet1.getString(2));
+                        BookingSingleton bookingDetails = BookingSingleton.getInstance();
+                        bookingDetails.setVehicleName(resultSet1.getString(2));
+                        bookingDetails.setNumber(resultSet1.getString(3));
                         String pricePerDay = "Rs " + resultSet1.getString("price_per_day") + "/= per day";
                         price.setText(pricePerDay);
                         if (resultSet1.getString(5) != null) {
