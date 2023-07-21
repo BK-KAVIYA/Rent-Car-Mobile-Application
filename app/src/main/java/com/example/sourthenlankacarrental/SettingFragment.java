@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sourthenlankacarrental.BookingDetails.MyBookingFragment;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.protobuf.StringValue;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,6 +53,8 @@ public class SettingFragment extends Fragment {
     private Button profileButton;
     RelativeLayout myRelativeLayout;
 
+    TextView numOfBooking,paymentAmount,fullName,Email;
+
 
 
 
@@ -67,6 +71,10 @@ public class SettingFragment extends Fragment {
         password=view.findViewById(R.id.password_profile);
         profileButton=view.findViewById(R.id.usr_profile_btn);
         myRelativeLayout = view.findViewById(R.id.mybooking);
+        numOfBooking=view.findViewById(R.id.booking_label);
+        paymentAmount=view.findViewById(R.id.payment_label);
+        fullName=view.findViewById(R.id.fullname_field);
+        Email=view.findViewById(R.id.profile_email);
 
 
         DBConnection dbConnection=new DBConnection();
@@ -141,12 +149,45 @@ public class SettingFragment extends Fragment {
                             userHelperClass.setPassword(resultSet.getString(9));
 
 
+                            fullName.setText(userHelperClass.getRegName());
+                            Email.setText(userHelperClass.getEmail());
+
                             fullname.setText(userHelperClass.getRegName());
                             uemail.setText(userHelperClass.getEmail());
                             uname.setText(userHelperClass.getUserName());
                             idNumber.setText(userHelperClass.getIdNumber());
                             mobile.setText(userHelperClass.getPhonenNumber());
                             password.setText(userHelperClass.getPassword());
+                        }
+
+
+                        if (connection != null) {
+
+
+                            String query1 = "select count(id) AS row_count  FROM [slcrms].[dbo].[booking] WHERE customer_email=?";
+                            PreparedStatement statement1 = connection.prepareStatement(query1);
+                            statement1.setString(1, email);
+
+                            ResultSet resultSet1 = statement1.executeQuery();
+                            int rowCount=0;
+                            if (resultSet1.next()) {
+                                rowCount=resultSet1.getInt("row_count");
+                            }
+                            System.out.println("Rows-----------------"+rowCount);
+                            numOfBooking.setText(String.valueOf(rowCount));
+                        }
+
+                        if(connection!=null){
+                            String query2="select sum(amount) AS amount  FROM [slcrms].[dbo].[transaction] WHERE booking_id IN (select id  FROM [slcrms].[dbo].[booking] WHERE customer_email=?)";
+                            PreparedStatement statement2 = connection.prepareStatement(query2);
+                            statement2.setString(1, email);
+
+                            ResultSet resultSet2 = statement2.executeQuery();
+                            int amount=0;
+                            if (resultSet2.next()) {
+                                amount=resultSet2.getInt("amount");
+                            }
+                            paymentAmount.setText("Rs: "+String.valueOf(amount)+".00/=");
                         }
 
 

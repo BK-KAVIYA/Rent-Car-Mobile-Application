@@ -42,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fullname_field"
+                android:id="@+id/profile_email"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/profile_image"
                 android:includeFontPadding="false"
@@ -85,7 +86,8 @@
                         android:fontFamily="@font/antic"
                         android:includeFontPadding="false"
                         android:text="123"
-                        android:textSize="20sp" />
+                        android:textStyle="bold"
+                        android:textSize="24sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -124,7 +126,8 @@
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/antic"
                         android:includeFontPadding="false"
-                        android:text="$123"
+                        android:text="Rs: 100000/="
+                        android:textStyle="bold"
                         android:textSize="20sp" />
 
                     <TextView
@@ -156,6 +159,7 @@
                     android:id="@+id/full_name_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:drawableLeft="@drawable/baseline_account_circle_24"
                     android:drawablePadding="10dp"
                     android:text="Baladurage Kavinda" />
@@ -174,6 +178,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_email_24"
                     android:drawablePadding="10dp"
+                    android:textColor="@color/black"
                     android:text="dilshankavinda372@gmailcom" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,6 +195,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_3p_24"
                     android:drawablePadding="10dp"
+                    android:textColor="@color/black"
                     android:text="KA VI YA" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -206,6 +212,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_payment_24"
                     android:drawablePadding="10dp"
+                    android:textColor="@color/black"
                     android:text="199926700657" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -222,6 +229,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_phone_android_24"
                     android:drawablePadding="10dp"
+                    android:textColor="@color/black"
                     android:text="0788311883" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -237,10 +245,11 @@
                     android:id="@+id/password_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/baseline_account_circle_24"
+                    android:drawableLeft="@drawable/baseline_phone_android_24"
                     android:drawablePadding="10dp"
                     android:inputType="textPassword"
-                    android:text="Kavi@@99" />
+                    android:text="Kavi@@99"
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
