@@ -132,7 +132,7 @@ public class MessageFragment extends Fragment {
 
         if (connection != null) {
 
-            String query = "INSERT INTO [slcrms].[dbo].[customer_message] (userEmail, message_to,message, received_time,received_date,is_replied,user_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO [slcrms].[dbo].[customer_message] (user_email, message_to,message, received_time,received_date,is_replied,user_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = null;
             try {
                 statement = connection.prepareStatement(query);
@@ -166,7 +166,7 @@ public class MessageFragment extends Fragment {
         email= UserSingleton.getInstance().getUserEmail();
 
         try {
-            String query = "SELECT * FROM [slcrms].[dbo].[customer_message] WHERE userEmail IN (?,'Admin')";
+            String query = "SELECT * FROM [slcrms].[dbo].[customer_message] WHERE user_email IN (?,'Admin')";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, email);
 

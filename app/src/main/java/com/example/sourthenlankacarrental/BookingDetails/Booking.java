@@ -181,4 +181,12 @@ public class Booking {
     public void setIs_delete(int is_delete) {
         this.is_delete = is_delete;
     }
+
+    public String getVehicle_imgUrl() {
+        return vehicle_imgUrl;
+    }
+
+    public void setVehicle_imgUrl(String vehicle_imgUrl) {
+        this.vehicle_imgUrl = vehicle_imgUrl;
+    }
 }

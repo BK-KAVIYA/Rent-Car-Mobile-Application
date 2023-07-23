@@ -1,8 +1,9 @@
-package com.example.sourthenlankacarrental;
+package com.example.sourthenlankacarrental.Guarantor;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -21,51 +22,43 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sourthenlankacarrental.Booking_details;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
-import com.example.sourthenlankacarrental.Guarantor.Guarantor;
 import com.example.sourthenlankacarrental.Payment.PaymentActivity;
+import com.example.sourthenlankacarrental.R;
 import com.example.sourthenlankacarrental.calculate.PriceCalculator;
-import com.example.sourthenlankacarrental.user.UserSingleton;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GaurantorDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
+    private static final int PICK_IMAGE_REQUEST = 1;
+
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
+
+    private byte[] selectedImageBytes;
     Guarantor guarantor=new Guarantor();
     String[] gender={"Select Gender","Male","Female"};
     String[] district={"Select district","Colombo","Gampaha","Kalutara","Kandy","Matale","Nuwara Eliya","Galle","Matara","Hambantota","Jaffna","Kilinochchi","Mannar","Vavuniya","Mullaitivu","Batticaloa","Ampara","Trincomalee","Kurunegala","Puttalam","Anuradhapura","Polonnaruwa","Badulla","Moneragala","Ratnapura","Kegalle"};
-
     Connection connection;
     TextInputEditText name_txt,mobile_txt,nic_txt,age_txt;
     ImageView imageViewVehicle,nicimage;
     TextView termsAndCondition;
-
     double totalPrice;
     CheckBox checkBox;
     Spinner district_txt;
     Button booking_btn;
     int BookingId,vehicle_ID;
-
     long Date_diff;
-
     RelativeLayout layout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,17 +120,16 @@ public class GaurantorDetails extends AppCompatActivity implements AdapterView.O
         nic_txt=findViewById(R.id.nic_txt);
         age_txt=findViewById(R.id.age_txt);
         termsAndCondition=findViewById(R.id.termsandcondition);
-        //checkBox=findViewById(R.id.checkbox);
         layout=findViewById(R.id.relativelayout);
+        nicimage=findViewById(R.id.nicgallery);
 
-
-        //booking_btn.setEnabled(false);
-
-        // Set a listener to track checkbox state changes
-//        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            // Enable the button if the checkbox is checked
-//            booking_btn.setEnabled(isChecked);
-//        });
+        Button btnGallery=findViewById(R.id.nicbtn);
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
         booking_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,59 +138,47 @@ public class GaurantorDetails extends AppCompatActivity implements AdapterView.O
         });
 
 
-//        booking_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                guarantor.setReserved_id(BookingId);
-//                guarantor.setName(name_txt.getText().toString());
-//                guarantor.setNic(nic_txt.getText().toString());
-//                guarantor.setPhone(mobile_txt.getText().toString());
-//                guarantor.setAge(Integer.parseInt(age_txt.getText().toString()));
-//                guarantor.setNic_url("gaura_1.jpg");
-//
-//                DBConnection dbConnection=new DBConnection();
-//                connection=dbConnection.getConnection();
-//                if (connection != null) {
-//
-//                    String query = "INSERT INTO [slcrms].[dbo].[guarantor] (reserved_id, name, nic,phone,age,district,gender,nic_copy,is_deleted) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
-//                    PreparedStatement statement = null;
-//                    try {
-//                        statement = connection.prepareStatement(query);
-//                        statement.setInt(1, guarantor.getReserved_id());
-//                        statement.setString(2, guarantor.getName());
-//                        statement.setString(3, guarantor.getNic());
-//                        statement.setString(4, guarantor.getPhone());
-//                        statement.setInt(5, guarantor.getAge());
-//                        statement.setString(6, guarantor.getDistrict());
-//                        statement.setString(7, guarantor.getGender());
-//                        statement.setString(8, guarantor.getNic_url());
-//                        statement.setInt(9, 0);
-//
-//                        int rowsAffected = statement.executeUpdate();
-//                        if (rowsAffected > 0) {
-//
-//                            int bookingId=guarantor.getReserved_id();
-//                            Intent intent=new Intent(GaurantorDetails.this, PaymentActivity.class);
-//                            intent.putExtra("BID", bookingId);
-//                            startActivity(intent);
-//
-//                            Context context = getApplicationContext();
-//                            Toast.makeText(context, "Done!", Toast.LENGTH_SHORT).show();
-//
-//
-//                        } else {
-//                            Context context = getApplicationContext();
-//                            Toast.makeText(context, "Something went wrong!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    } catch (SQLException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//
-//                }
-//
-//            }
-//        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                displaySelectedImage(bitmap);
+                // Convert the bitmap to a byte array
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                selectedImageBytes = baos.toByteArray();
+                // Close the InputStream to release resources properly
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            displaySelectedImage(imageBitmap);
+            // Convert the bitmap to a byte array
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            selectedImageBytes = baos.toByteArray();
+        }
+    }
+    private void openGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+    }
+
+    private void displaySelectedImage(Bitmap bitmap) {
+        // Display the selected image in the ImageView
+        nicimage.setImageBitmap(bitmap);
     }
 
     @Override
@@ -253,7 +233,14 @@ public class GaurantorDetails extends AppCompatActivity implements AdapterView.O
                 guarantor.setPhone(mobile_txt.getText().toString());
                 guarantor.setAge(Integer.parseInt(age_txt.getText().toString()));
                 guarantor.setNic_url("gaura_1.jpg");
-
+                byte[] imageData=null;
+                if (selectedImageBytes != null) {
+                    // Upload the image to the SQL Server
+                    imageData = selectedImageBytes;
+                } else {
+                    Toast.makeText(GaurantorDetails.this, "No image selected.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 DBConnection dbConnection=new DBConnection();
                 connection=dbConnection.getConnection();
                 if (connection != null) {
@@ -269,7 +256,7 @@ public class GaurantorDetails extends AppCompatActivity implements AdapterView.O
                         statement.setInt(5, guarantor.getAge());
                         statement.setString(6, guarantor.getDistrict());
                         statement.setString(7, guarantor.getGender());
-                        statement.setString(8, guarantor.getNic_url());
+                        statement.setBytes(8, imageData);
                         statement.setInt(9, 0);
 
                         int rowsAffected = statement.executeUpdate();
@@ -305,4 +292,6 @@ public class GaurantorDetails extends AppCompatActivity implements AdapterView.O
             }
         });
     }
+
+
 }

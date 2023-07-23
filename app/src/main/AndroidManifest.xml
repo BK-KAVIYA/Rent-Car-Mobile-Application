@@ -35,7 +35,7 @@
             android:name=".SettingFragment"
             android:exported="true" />
         <activity
-            android:name=".GaurantorDetails"
+            android:name=".Guarantor.GaurantorDetails"
             android:exported="true" />
         <activity
             android:name=".Payment.PaymentActivity"

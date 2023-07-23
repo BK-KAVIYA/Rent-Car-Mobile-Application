@@ -7,10 +7,10 @@ import java.sql.SQLException;
 
 public class DBConnection {
     Connection connection;
-    String username, password, ip, port, database;
+    static String username, password, ip, port, database;
 
-    public Connection getConnection() {
-        ip = "192.168.8.100";
+    public static Connection getConnection() {
+        ip = "192.168.8.101";
         port = "1444";
         database = "slcrms";
         username = "sa";

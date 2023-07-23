@@ -86,11 +86,7 @@ public class MyBookingFragment extends AppCompatActivity {
                         System.out.println("password incorrect");
                     }
 
-//                    UserSingleton.getInstance().setUserEmail(email);
-//                    startActivity(new Intent(Login.this, Dashboard.class));
-//                    finish();
 
-                    // Do something with the retrieved data
 
                 }
                 bookingManager = new BookingManager(this, bookingList);

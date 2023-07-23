@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/notificationtxt"
-        android:text="Notification Center
-"
+        android:text="Notification Center"
         android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:textSize="20sp" />

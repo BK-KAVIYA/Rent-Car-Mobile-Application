@@ -41,12 +41,15 @@ public class BookingManager extends RecyclerView.Adapter<BookingViewHolder> {
         }
         holder.status.setText(status);
 
-//        String imageUrl = bookingList.get(position).getImage();
-//        if (imageUrl != null) {
-//            Glide.with(holder.imageView.getContext())
-//                    .load(imageUrl)
-//                    .into(holder.imageView);
-//        }
+        String imageUrl = bookingList.get(position).getVehicle_imgUrl();
+
+        if (imageUrl != null) {
+            Glide.with(holder.imageView.getContext())
+                    .load(imageUrl)
+                    .into(holder.imageView);
+        }
+
+
     }
 
     @Override

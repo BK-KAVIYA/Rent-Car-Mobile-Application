@@ -21,21 +21,14 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.sourthenlankacarrental.BookingDetails.BookingSingleton;
-import com.example.sourthenlankacarrental.BookingDetails.MyBookingFragment;
-import com.example.sourthenlankacarrental.Booking_details;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
-import com.example.sourthenlankacarrental.Dashboard;
-import com.example.sourthenlankacarrental.GaurantorDetails;
 import com.example.sourthenlankacarrental.Invoice.Invoice;
-import com.example.sourthenlankacarrental.Login;
 import com.example.sourthenlankacarrental.R;
 import com.example.sourthenlankacarrental.notification.NotificationFragment;
 import com.example.sourthenlankacarrental.notification.NotificationGenarator;
-import com.example.sourthenlankacarrental.user.UserSingleton;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

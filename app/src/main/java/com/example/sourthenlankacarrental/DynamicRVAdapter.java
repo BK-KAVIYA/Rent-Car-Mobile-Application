@@ -50,8 +50,6 @@ public  class DynamicRVAdapter extends RecyclerView.Adapter<DynamicRVAdapter.Vie
         String imageUrl = dynamicRVModels.get(position).getImage();
 
 
-//        Bitmap bitmap = BitmapFactory.decodeFile(imageUrl);
-//        holder.imageView.setImageBitmap(bitmap);
         if (imageUrl != null) {
             Glide.with(holder.imageView.getContext())
                     .load(imageUrl)

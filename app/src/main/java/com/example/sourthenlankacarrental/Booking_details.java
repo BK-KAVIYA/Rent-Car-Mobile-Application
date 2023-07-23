@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,6 +32,7 @@ import com.bumptech.glide.request.target.Target;
 import com.example.sourthenlankacarrental.BookingDetails.Booking;
 import com.example.sourthenlankacarrental.BookingDetails.BookingSingleton;
 import com.example.sourthenlankacarrental.Connection.DBConnection;
+import com.example.sourthenlankacarrental.Guarantor.GaurantorDetails;
 import com.example.sourthenlankacarrental.user.UserHelperClass;
 import com.example.sourthenlankacarrental.user.UserSingleton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -38,6 +41,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,6 +55,11 @@ import java.util.Calendar;
 
 public class Booking_details extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
+    private static final int PICK_IMAGE_REQUEST = 1;
+
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
+
+    private byte[] selectedImageBytes;
     Connection connection;
     TextInputLayout start_date,end_date;
     TextInputEditText start_date_txt,end_date_txt,name_txt,mobile_txt,nic_txt,age_txt;
@@ -124,7 +135,7 @@ private final int GALLERY_REQ_CODE=1000;
         nic_txt=findViewById(R.id.nic_txt);
         age_txt=findViewById(R.id.age_txt);
         driverStatusCheckbox = findViewById(R.id.driver_status);
-        int driverStatus = driverStatusCheckbox.isChecked() ? 1 : 0;
+
 
 
 
@@ -308,17 +319,25 @@ private final int GALLERY_REQ_CODE=1000;
 
 
                 booking.setStatus(0);
+                int driverStatus = driverStatusCheckbox.isChecked() ? 1 : 0;
                 booking.setDriverStatus(driverStatus);
                 booking.setUserEmail(UserSingleton.getInstance().getUserEmail());
                 booking.setNic_url("people_1.png");
                 booking.setVehicle_id(getIntent().getIntExtra("vid",1));
-
+                byte[] imageData=null;
+                if (selectedImageBytes != null) {
+                    // Upload the image to the SQL Server
+                    imageData = selectedImageBytes;
+                } else {
+                    Toast.makeText(Booking_details.this, "No image selected.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 DBConnection dbConnection=new DBConnection();
                 connection=dbConnection.getConnection();
                 if (connection != null) {
 
-                    String query = "INSERT INTO [slcrms].[dbo].[booking] (customer_nic, customer_name, customer_email,customer_phone,vehicle_id,from_date,to_date,posting_date,district,driver_status,gender,status,is_complete,is_deleted) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";
+                    String query = "INSERT INTO [slcrms].[dbo].[booking] (customer_nic, customer_name, customer_email,customer_phone,vehicle_id,from_date,to_date,posting_date,district,nic_image,driver_status,gender,status,is_complete,is_deleted) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
                     PreparedStatement statement = null;
                     try {
                         statement = connection.prepareStatement(query);
@@ -331,11 +350,12 @@ private final int GALLERY_REQ_CODE=1000;
                         statement.setString(7, booking.getEndDate());
                         statement.setString(8, booking.getBooking_date());
                         statement.setString(9, booking.getDistrict());
-                        statement.setInt(10, booking.getDriverStatus());
-                        statement.setString(11, booking.getGender());
-                        statement.setInt(12, booking.getStatus());
-                        statement.setInt(13, booking.getIs_complete());
-                        statement.setInt(14, booking.getIs_delete());
+                        statement.setBytes(10,imageData);
+                        statement.setInt(11, booking.getDriverStatus());
+                        statement.setString(12, booking.getGender());
+                        statement.setInt(13, booking.getStatus());
+                        statement.setInt(14, booking.getIs_complete());
+                        statement.setInt(15, booking.getIs_delete());
 
 
                         int rowsAffected = statement.executeUpdate();
@@ -350,7 +370,7 @@ private final int GALLERY_REQ_CODE=1000;
 
                             if (resultSet1.next()) {
                                 int bookingId=resultSet1.getInt(1);
-                                Intent intent=new Intent(Booking_details.this,GaurantorDetails.class);
+                                Intent intent=new Intent(Booking_details.this, GaurantorDetails.class);
                                 intent.putExtra("BID", bookingId);
                                 intent.putExtra("DDIF",differenceInDays);
                                 intent.putExtra("VID",vehicleId);
@@ -376,93 +396,9 @@ private final int GALLERY_REQ_CODE=1000;
             }
 
 
-//
-//                    Map<String, Object> bookingData = new HashMap<>();
-//                    bookingData.put("name", booking.getName());
-//                    bookingData.put("phone", booking.getPhone());
-//                    bookingData.put("nic", booking.getNic());
-//                    bookingData.put("gender", booking.getGender());
-//                    bookingData.put("age", booking.getAge());
-//                    bookingData.put("district", booking.getDistrict());
-//                    bookingData.put("start_date", booking.getStartDate());
-//                    bookingData.put("end_date", booking.getEndDate());
-//                    bookingData.put("vehicle_id",getVehicleId());
-//                    bookingData.put("driver_status",booking.getDriverStatus());
-//                    bookingData.put("status",booking.getStatus());
-//                    bookingData.put("user_mail",booking.getUserEmail());
-
-//                    String bookingKey = myRef.push().getKey();
-//                    myRef.child(bookingKey).setValue(bookingData);
-//                   // myRef.push().setValue(bookingData);
-//
-//                    myRef.setValue(bookingData).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                // Data saved successfully
-//                                Intent intent=new Intent(Booking_details.this,GaurantorDetails.class);
-//                                startActivity(intent);
-//                            }
-//                        })
-//                        .addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                // Error occurred while saving data
-//                                System.out.println("data insertion error");
-//                            }
-//                        });
-
-
-//                //Upload Image to Firebase datastore
-//                FirebaseStorage storage = FirebaseStorage.getInstance();
-//                StorageReference storageRef = storage.getReference();
-//
-//                String filename = "image_" + System.currentTimeMillis() + ".jpg";
-//                StorageReference imageRef = storageRef.child(filename);
-//
-//                // Get the drawable from the ImageView
-//                Drawable drawable = nicimage.getDrawable();
-//                BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-//                Bitmap bitmap = bitmapDrawable.getBitmap();
-//
-//                // Compress the image on a background thread
-//                new AsyncTask<Bitmap, Void, byte[]>() {
-//                    @Override
-//                    protected byte[] doInBackground(Bitmap... bitmaps) {
-//                        Bitmap compressedBitmap = Bitmap.createScaledBitmap(bitmaps[0], 800, 800, true);
-//                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                        compressedBitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-//                        return baos.toByteArray();
-//                    }
-//
-//                    @Override
-//                    protected void onPostExecute(byte[] imageData) {
-//                        // Upload the image to Firebase Storage
-//                        UploadTask uploadTask = imageRef.putBytes(imageData);
-//                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                            @Override
-//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                // Image upload success, retrieve the download URL
-//                                Task<Uri> downloadUrlTask = imageRef.getDownloadUrl();
-//                                downloadUrlTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                    @Override
-//                                    public void onSuccess(Uri downloadUrl) {
-//                                        // Image download URL retrieved, store it in the Firebase Realtime Database
-//                                        String imageUrl = downloadUrl.toString();
-//                                        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
-//                                        Map<String, Object> usernicData = new HashMap<>();
-//                                        usernicData.put("image_url", imageUrl);
-//                                        usernicData.put("user_email", booking.getUserEmail());
-//
-//                                        databaseRef.child("customer_nic").setValue(usernicData);
-//                                    }
-//                                });
-//                            }
-//                        });
-//                    }
-//                }.execute(bitmap);
 
                 });
-         //   });
+
 
 
         nicimage=findViewById(R.id.nicgallery);
@@ -471,13 +407,9 @@ private final int GALLERY_REQ_CODE=1000;
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent niccpy=new Intent(Intent.ACTION_PICK);
-                niccpy.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(niccpy,GALLERY_REQ_CODE);
+                    openGallery();
             }
         });
-
-
 
 
 
@@ -526,16 +458,84 @@ private final int GALLERY_REQ_CODE=1000;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode==RESULT_OK){
-            if(requestCode==GALLERY_REQ_CODE){
-                nicimage.setImageURI(data.getData());
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                displaySelectedImage(bitmap);
+                // Convert the bitmap to a byte array
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                selectedImageBytes = baos.toByteArray();
+                // Close the InputStream to release resources properly
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            displaySelectedImage(imageBitmap);
+            // Convert the bitmap to a byte array
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            selectedImageBytes = baos.toByteArray();
         }
     }
 
+    private void openGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+    }
+
+    private void displaySelectedImage(Bitmap bitmap) {
+        // Display the selected image in the ImageView
+        nicimage.setImageBitmap(bitmap);
+    }
+
+//    private class InsertImageTask extends AsyncTask<byte[], Void, String> {
+//        @Override
+//        protected String doInBackground(byte[]... params) {
+//            System.out.println("This method is call");
+//            byte[] imageData = params[0];
+//            Connection connection = null;
+//            try {
+//                // Get a connection from the DBConnectionHelper
+//                connection = DBConnection.getConnection();
+//
+//                // Prepare the SQL statement
+//                String sql = "INSERT INTO images (image_data) VALUES (?)";
+//                PreparedStatement statement = connection.prepareStatement(sql);
+//                statement.setBytes(1, imageData);
+//
+//                // Execute the SQL statement
+//                int rowsAffected = statement.executeUpdate();
+//
+//                if (rowsAffected > 0) {
+//                    return "Image uploaded successfully.";
+//                } else {
+//                    return "Failed to upload image.";
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//                return "Error: " + e.getMessage();
+//            } finally {
+//                // Close the connection using the DBConnectionHelper
+//                // DBConnectionHelper.closeConnection(connection);
+//            }
+//        }
+
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // Handle the result after the upload is complete
+//            Toast.makeText(Booking_details.this, result, Toast.LENGTH_SHORT).show();
+//        }
+//    }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
@@ -550,18 +550,7 @@ private final int GALLERY_REQ_CODE=1000;
             String selectedGender = gender[position];
             booking.setGender(selectedGender);
         }
-//        booking.setDistrict(district[position]);
-//        booking.setGender(gender[position]);
-//        System.out.println("district---------------------------------"+district[position]);
-//        Toast.makeText(getApplicationContext(),
-//                        gender[position],
-//                        Toast.LENGTH_LONG)
-//                .show();
-//
-//        Toast.makeText(getApplicationContext(),
-//                        district[position],
-//                        Toast.LENGTH_LONG)
-//                .show();
+
     }
 
     @Override
