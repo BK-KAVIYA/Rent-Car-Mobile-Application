@@ -57,18 +57,12 @@ public class MessageFragment extends Fragment {
 
     ArrayList<BaseMessage> baseMessageslist=new ArrayList();
 
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
 
-//        database = FirebaseDatabase.getInstance();
-//        myRef = database.getReference();
-//        databaseReference = database.getReference();
 
         DBConnection dbConnection=new DBConnection();
         connection=dbConnection.getConnection();
@@ -126,8 +120,7 @@ public class MessageFragment extends Fragment {
         String time = hour + ":" + minute;
 
 
-        //String messageId = messagesRef.push().getKey();
-        //List<BaseMessage> baseMessageList=new ArrayList<>();;
+
         baseMessageslist.add(new BaseMessage(messageText, senderEmail, date, time));
 
         if (connection != null) {
@@ -182,48 +175,7 @@ public class MessageFragment extends Fragment {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-//Firebase Connection
-//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        DatabaseReference messagesRef = firebaseDatabase.getReference("messages");
-//
-//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-//        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-//        String senderEmail = currentUser.getEmail();
-//
-//
-//        Query query = databaseReference.child("messages").orderByChild("senderEmail").equalTo(senderEmail);
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//
-//                    List<BaseMessage> baseMessageList = new ArrayList<>();
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        BaseMessage baseMessage = snapshot.getValue(BaseMessage.class);
-//                        baseMessageList.add(baseMessage);
-//                    }
-//
-//                    for (BaseMessage baseMessage : baseMessageList) {
-//                        System.out.println(baseMessage.getMessage()+"=====================");
-//                        baseMessageslist.add(new BaseMessage(baseMessage.getMessage(),baseMessage.getSenderEmail(),baseMessage.getDate(),baseMessage.getTime()));
-//                       // itemVehicle.add(new DynamicItemList(vehicle.getId(),vehicle.getTitle(), vehicleList.getDescription(), vehicleList.getRating(), vehicle.getImage()));
-//                    }
-//                    messageManageradapter=new MessageManager(getContext(),baseMessageslist);
-//                    recyclerView.setAdapter(messageManageradapter);
-//                    //messageManageradapter.notifyDataSetChanged();
-//                }
-//                // Use the vehicle object here
-//                else {
-//                    // Handle case when data doesn't exist
-//                }
-//
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//            });
-      //  return list;
+
     }
 
 

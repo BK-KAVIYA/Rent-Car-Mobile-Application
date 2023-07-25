@@ -25,7 +25,5 @@ public class SentMessageHolder extends BaseMessageViewHolder {
         timeText.setText(message.getTime());
         date.setText(message.getDate());
 
-        // Format the stored timestamp into a readable String using method.
-       // timeText.setText(DateUtils.formatDateTime(message.getCreatedAt()));
     }
 }

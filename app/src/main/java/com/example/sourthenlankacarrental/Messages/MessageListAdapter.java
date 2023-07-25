@@ -21,18 +21,6 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         mMessageList = messageList;
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
-//        BaseMessage message = (BaseMessage) mMessageList.get(position);
-//
-//        if (message.getSender().getIdNumber().equals(SendBird.getCurrentUser().getUserId())) {
-//            // If the current user is the sender of the message
-//            return VIEW_TYPE_MESSAGE_SENT;
-//        } else {
-//            // If some other user sent the message
-//            return VIEW_TYPE_MESSAGE_RECEIVED;
-//        } return super.getItemViewType(position);
-//    }
 
     @NonNull
     @Override

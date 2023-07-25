@@ -8,7 +8,6 @@ public class BaseMessage {
     private String senderEmail;
     private String date;
     private String time;
-
     boolean sent;
 
     public BaseMessage() {

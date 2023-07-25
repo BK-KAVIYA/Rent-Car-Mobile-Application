@@ -31,12 +31,5 @@ public class ReceivedMessageHolder extends BaseMessageViewHolder {
         timeText.setText(message.getTime());
 
 
-
-        // Format the stored timestamp into a readable String using method.
-//        timeText.setText(DateUtils.formatDateTime(message.getCreatedAt()));
-//        nameText.setText(message.getSender().getUserName());
-
-        // Insert the profile image from the URL into the ImageView.
-       // ImageUtils.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
     }
 }
