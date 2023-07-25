@@ -1,3 +1,4 @@
+
 package com.example.sourthenlankacarrental.notification;
 
 import android.content.Context;
@@ -43,3 +44,4 @@ public class NotificationManager extends RecyclerView.Adapter<NotificationViewHo
         return notificationList.size();
     }
 }
+
