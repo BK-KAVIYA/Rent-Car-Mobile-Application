@@ -13,9 +13,16 @@ import android.widget.TextView;
 
 import com.example.sourthenlankacarrental.BookingDetails.BookingSingleton;
 import com.example.sourthenlankacarrental.BookingDetails.MyBookingFragment;
+import com.example.sourthenlankacarrental.Connection.DBConnection;
 import com.example.sourthenlankacarrental.Payment.PaymentActivity;
 import com.example.sourthenlankacarrental.R;
+import com.example.sourthenlankacarrental.notification.Notification;
+import com.example.sourthenlankacarrental.notification.NotificationManager;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -23,6 +30,10 @@ public class Invoice extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 1;
     private static final String FILE_NAME = "invoice.pdf";
     private Button printButton,myBooking;
+
+    private TextView InvoiceNumber;
+
+    Connection connection;
 
     TextView customerName,customerAddress,billingDate,vehicleDetails,fromDate,toDate,price,total;
     @Override
@@ -40,6 +51,26 @@ public class Invoice extends AppCompatActivity {
         price=findViewById(R.id.textViewPrice1);
         total=findViewById(R.id.textViewTotal);
         myBooking=findViewById(R.id.buttonHome);
+        InvoiceNumber=findViewById(R.id.textViewInvoiceNumber);
+
+
+        DBConnection dbConnection=new DBConnection();
+        connection=dbConnection.getConnection();
+
+
+        try {
+            String query = "SELECT TOP 1 [id] FROM [slcrms].[dbo].[transaction] ORDER BY [id] DESC;";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                InvoiceNumber.setText("Invoice Number: #00"+resultSet.getString(1));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
 
         BookingSingleton bookingDetails = BookingSingleton.getInstance();

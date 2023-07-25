@@ -23,7 +23,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/avatar1" />
+                android:src="@drawable/avatar1"/>
 
             <TextView
                 android:id="@+id/fullname_field"
@@ -127,8 +127,8 @@
                         android:fontFamily="@font/antic"
                         android:includeFontPadding="false"
                         android:text="Rs: 100000/="
-                        android:textStyle="bold"
-                        android:textSize="20sp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"

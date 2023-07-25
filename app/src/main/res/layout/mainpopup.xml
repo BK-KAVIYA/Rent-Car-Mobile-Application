@@ -18,13 +18,25 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="Be gracious and considerate"
-            android:textColor="@color/black"
+            android:textColor="@color/colorAccent"
             android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="**Customer Vehicle Booking Agreement**"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,8 +44,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:text="**Customer Vehicle Booking Agreement**\n
-        \n 01.I see that the vehicle bearing the above number which I rented from SOUTHERN LANKA RENT A CAR AND TOURS can only be used for regular purposes.  I declare that I will take full responsibility if this vehicle is used for any illegal activities.  If the car is used for an illegal purpose during the time it is in my custody or is taken into the custody of any police or court due to an accident or drunk driving or any other reason, to pay the daily fees agreed with the company for the entire period of such possession.  I agree.\n
+            android:text="01.I see that the vehicle bearing the above number which I rented from SOUTHERN LANKA RENT A CAR AND TOURS can only be used for regular purposes.  I declare that I will take full responsibility if this vehicle is used for any illegal activities.  If the car is used for an illegal purpose during the time it is in my custody or is taken into the custody of any police or court due to an accident or drunk driving or any other reason, to pay the daily fees agreed with the company for the entire period of such possession.  I agree.\n
         \n 02. That I will drive the car bearing the above number and that I will be liable for all damages and compensations that may arise from allowing another party to drive it.  (It is not related with car insurance.)\n
         \n 03. I agree to maintain the above mentioned vehicle properly (check engine oil, brake oil radiator water and accessories) and use it carefully and check all documents such as income license, insurance certificate etc. of the vehicle.\n
         \n 04. I agree to pay for any loss or damage that occurs while in my possession of the said vehicle from my money or insurance.  (For manual vehicles, I have to bear the damage caused by driving the clutch plate due to driving with my foot on the clutch, and the damage that may be caused by continuing to drive even though any signal indicating a fault in the vehicle is on.\n

@@ -10,7 +10,7 @@ public class DBConnection {
     static String username, password, ip, port, database;
 
     public static Connection getConnection() {
-        ip = "192.168.8.101";
+        ip = "192.168.8.100";
         port = "1444";
         database = "slcrms";
         username = "sa";

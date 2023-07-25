@@ -266,7 +266,31 @@
                     android:id="@id/nicgallery"
                     android:scaleType="fitXY"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Upload your Selfi Hear"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+
+                    <Button
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Driving Lision Image"
+                        android:id="@+id/delfbtn"
+                        android:textAlignment="center"/>
+
+                <ImageView
+                    android:layout_width="340dp"
+                    android:layout_height="230dp"
+                    android:id="@+id/imgcamera"
+                    android:scaleType="fitXY"/>
+
+
             </LinearLayout>
+
 
 
             <LinearLayout
@@ -342,8 +366,6 @@
                         android:focusableInTouchMode="false"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-
 
                 <CheckBox
                     android:layout_width="wrap_content"

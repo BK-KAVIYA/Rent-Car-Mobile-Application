@@ -44,21 +44,13 @@ import java.util.Map;
 
 
 public class SettingFragment extends Fragment {
-
-
     private String email=null;
-
     private Connection connection;
     private TextInputEditText fullname,uemail,uname,idNumber,mobile,password;
     private Button profileButton;
     RelativeLayout myRelativeLayout;
-
     TextView numOfBooking,paymentAmount,fullName,Email;
-
-
-
-
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -130,15 +122,12 @@ public class SettingFragment extends Fragment {
             }
         });
 
-
-
                     try {
                         String query = "SELECT * FROM [slcrms].[dbo].[user] WHERE email = ?";
                         PreparedStatement statement = connection.prepareStatement(query);
                         statement.setString(1, email);
 
                         ResultSet resultSet = statement.executeQuery();
-
                         if(resultSet.next()){
                             UserHelperClass userHelperClass=new UserHelperClass();
                             userHelperClass.setRegName(resultSet.getString(2));

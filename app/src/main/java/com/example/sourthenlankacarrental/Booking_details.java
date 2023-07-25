@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -60,15 +61,18 @@ public class Booking_details extends AppCompatActivity implements AdapterView.On
     private static final int REQUEST_IMAGE_CAPTURE = 2;
 
     private byte[] selectedImageBytes;
+
+    private byte[] selectedImageBytesSelfi;
     Connection connection;
     TextInputLayout start_date,end_date;
     TextInputEditText start_date_txt,end_date_txt,name_txt,mobile_txt,nic_txt,age_txt;
-    ImageView imageViewVehicle,nicimage;
+    ImageView imageViewVehicle,nicimage,imgselfi;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Spinner district_txt;
-    Button booking_btn;
+    Button booking_btn,open_camera;
     CheckBox driverStatusCheckbox;
     Booking booking=new Booking();
+
 
     long differenceInDays;
     private String name,mobile,nic_num,gender_txt,age,district_text,nic_cpy,start_dt,end_dt,email;
@@ -135,6 +139,20 @@ private final int GALLERY_REQ_CODE=1000;
         nic_txt=findViewById(R.id.nic_txt);
         age_txt=findViewById(R.id.age_txt);
         driverStatusCheckbox = findViewById(R.id.driver_status);
+        open_camera=findViewById(R.id.delfbtn);
+        imgselfi=findViewById(R.id.imgcamera);
+
+        open_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                } else {
+                    Toast.makeText(Booking_details.this, "Camera not available.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
 
@@ -332,12 +350,20 @@ private final int GALLERY_REQ_CODE=1000;
                     Toast.makeText(Booking_details.this, "No image selected.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                byte[] imageDataselfi=null;
+                if (selectedImageBytesSelfi != null) {
+                    // Upload the image to the SQL Server
+                    imageDataselfi = selectedImageBytesSelfi;
+                } else {
+                    Toast.makeText(Booking_details.this, "No image selected.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 DBConnection dbConnection=new DBConnection();
                 connection=dbConnection.getConnection();
                 if (connection != null) {
 
-                    String query = "INSERT INTO [slcrms].[dbo].[booking] (customer_nic, customer_name, customer_email,customer_phone,vehicle_id,from_date,to_date,posting_date,district,nic_image,driver_status,gender,status,is_complete,is_deleted) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
+                    String query = "INSERT INTO [slcrms].[dbo].[booking] (customer_nic, customer_name, customer_email,customer_phone,vehicle_id,from_date,to_date,posting_date,district,selfi_image,nic_image,driver_status,gender,status,is_complete,is_deleted) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)";
                     PreparedStatement statement = null;
                     try {
                         statement = connection.prepareStatement(query);
@@ -350,12 +376,13 @@ private final int GALLERY_REQ_CODE=1000;
                         statement.setString(7, booking.getEndDate());
                         statement.setString(8, booking.getBooking_date());
                         statement.setString(9, booking.getDistrict());
-                        statement.setBytes(10,imageData);
-                        statement.setInt(11, booking.getDriverStatus());
-                        statement.setString(12, booking.getGender());
-                        statement.setInt(13, booking.getStatus());
-                        statement.setInt(14, booking.getIs_complete());
-                        statement.setInt(15, booking.getIs_delete());
+                        statement.setBytes(10,imageDataselfi);
+                        statement.setBytes(11,imageData);
+                        statement.setInt(12, booking.getDriverStatus());
+                        statement.setString(13, booking.getGender());
+                        statement.setInt(14, booking.getStatus());
+                        statement.setInt(15, booking.getIs_complete());
+                        statement.setInt(16, booking.getIs_delete());
 
 
                         int rowsAffected = statement.executeUpdate();
@@ -478,11 +505,11 @@ private final int GALLERY_REQ_CODE=1000;
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            displaySelectedImage(imageBitmap);
+            displaySelectedImageId(imageBitmap);
             // Convert the bitmap to a byte array
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            selectedImageBytes = baos.toByteArray();
+            selectedImageBytesSelfi = baos.toByteArray();
         }
     }
 
@@ -496,6 +523,10 @@ private final int GALLERY_REQ_CODE=1000;
     private void displaySelectedImage(Bitmap bitmap) {
         // Display the selected image in the ImageView
         nicimage.setImageBitmap(bitmap);
+    }
+    private void displaySelectedImageId(Bitmap bitmap) {
+        // Display the selected image in the ImageView
+        imgselfi.setImageBitmap(bitmap);
     }
 
 //    private class InsertImageTask extends AsyncTask<byte[], Void, String> {
